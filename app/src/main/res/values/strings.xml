@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">TVSeries</string>
+    <string name="label_tv_series">TV series</string>
+    <string name="label_details">Details</string>
+    <string name="label_favorites">Favorites</string>
+    <string name="show_name">Show name</string>
+    <string name="hint_swipe_to_see_more">swipe to see more</string>
+    <string name="no_data">no data available</string>
+    <string name="details_country_label">country:</string>
+    <string name="details_startDate_label">start date:</string>
+    <string name="details_endDate_label">end date:</string>
+    <string name="details_status_label">status:</string>
+    <string name="hint_tap_to_see_full_size_image">tap to see full size image</string>
+    <string name="go_to_favorites">Go to favorites</string>
+    <string name="hint_tap_and_hold_to_remove_item">tap and hold to remove item</string>
+    <string name="no_favorite_shows">no favorite shows</string>
+</resources>
