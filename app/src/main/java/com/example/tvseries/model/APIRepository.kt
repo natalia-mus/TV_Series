@@ -24,7 +24,7 @@ class APIRepository @Inject constructor() : MainActivityContract.MainActivityMod
 
             override fun onResponse(call: Call<TVSeries>, response: Response<TVSeries>) {
                 if (response.isSuccessful) {
-                    callback.onSuccess(response.body()!!)
+                    response.body()?.let { callback.onSuccess(it) }
                 } else {
                     callback.onError()
                 }
