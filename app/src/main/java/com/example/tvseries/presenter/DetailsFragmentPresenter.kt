@@ -1,6 +1,5 @@
 package com.example.tvseries.presenter
 
-import android.util.Log
 import com.example.tvseries.BaseApplication
 import com.example.tvseries.contracts.DetailsFragmentContract
 import com.example.tvseries.database.FavoriteShow
@@ -23,7 +22,6 @@ class DetailsFragmentPresenter :
 
     override fun setViewToPresenter(view: DetailsFragmentContract.DetailsFragmentView) {
         this.view = view
-        Log.e("model", model.toString())
     }
 
     override fun initView() {
