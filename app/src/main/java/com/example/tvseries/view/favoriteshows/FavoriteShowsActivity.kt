@@ -60,6 +60,8 @@ class FavoriteShowsActivity : AppCompatActivity(),
             onResume()
             initView()
             initData()
+            favoriteShowsRecyclerView.recycledViewPool.clear()
+            favoriteShowsRecyclerView.adapter?.notifyDataSetChanged()
         }
     }
 
