@@ -49,6 +49,7 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3'
     kapt 'com.google.dagger:dagger-compiler:2.27'
+    //annotationProcessor 'com.google.dagger:dagger-compiler:2.27'
     kapt "androidx.room:room-compiler:$room_version"
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
