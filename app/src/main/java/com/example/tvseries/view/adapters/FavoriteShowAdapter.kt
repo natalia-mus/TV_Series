@@ -14,7 +14,7 @@ import com.example.tvseries.database.FavoriteShow
 
 class FavoriteShowAdapter(
     private val context: Context,
-    private val favoriteShows: List<FavoriteShow>,
+    private var favoriteShows: List<FavoriteShow>,
     private val onItemLongClickAction: OnItemLongClickAction
 ) :
     RecyclerView.Adapter<FavoriteShowViewHolder>() {
@@ -37,6 +37,11 @@ class FavoriteShowAdapter(
     }
 
     override fun getItemCount() = favoriteShows.size
+
+    fun dataSetChanged(newDataSet: List<FavoriteShow>) {
+        favoriteShows = newDataSet
+        notifyDataSetChanged()
+    }
 }
 
 

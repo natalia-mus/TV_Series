@@ -14,7 +14,10 @@ import com.example.tvseries.database.FavoriteShow
 import com.example.tvseries.presenter.FavoriteShowsActivityPresenter
 import com.example.tvseries.view.adapters.FavoriteShowAdapter
 import com.example.tvseries.view.adapters.OnItemLongClickAction
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class FavoriteShowsActivity : AppCompatActivity(),
     FavoriteShowsActivityContract.FavoriteShowsActivityView,
@@ -25,6 +28,8 @@ class FavoriteShowsActivity : AppCompatActivity(),
     private lateinit var favoriteShowsRecyclerView: RecyclerView
     private lateinit var noFavoriteShowsInfo: TextView
     private lateinit var favoriteShowsListSection: LinearLayout
+
+    private var adapter: FavoriteShowAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,31 +46,37 @@ class FavoriteShowsActivity : AppCompatActivity(),
         favoriteShowsRecyclerView.layoutManager = GridLayoutManager(this, 3)
     }
 
-    override fun initData() {
-        GlobalScope.async {
-            val data = presenter.returnData()
-
-            if (data.isEmpty()) {
-                favoriteShowsListSection.visibility = View.INVISIBLE
-                noFavoriteShowsInfo.visibility = View.VISIBLE
-            } else {
-                favoriteShowsRecyclerView.adapter =
-                    FavoriteShowAdapter(context, data, this@FavoriteShowsActivity)
-            }
-        }
-    }
-
     override fun updateView() {
-        runOnUiThread {
-            onResume()
-            initView()
-            initData()
-            favoriteShowsRecyclerView.recycledViewPool.clear()
-            favoriteShowsRecyclerView.adapter?.notifyDataSetChanged()
-        }
+        initData()
     }
 
     override fun onItemLongClicked(item: FavoriteShow) {
         presenter.delete(item)
     }
+
+    override fun initData() {
+        GlobalScope.launch(Dispatchers.IO) {
+            val data = presenter.returnData()
+
+            withContext(Dispatchers.Main) {
+                refreshView(data)
+            }
+        }
+    }
+
+    private fun refreshView(data: List<FavoriteShow>) {
+        if (data.isEmpty()) {
+            favoriteShowsListSection.visibility = View.INVISIBLE
+            noFavoriteShowsInfo.visibility = View.VISIBLE
+        } else {
+            if (adapter == null) {
+                favoriteShowsRecyclerView.adapter = FavoriteShowAdapter(context, data, this@FavoriteShowsActivity)
+                adapter = favoriteShowsRecyclerView.adapter as FavoriteShowAdapter
+
+            } else {
+                adapter!!.dataSetChanged(data)
+            }
+        }
+    }
+
 }
