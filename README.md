@@ -1,4 +1,4 @@
-# TV_Series
+# TV Series
 
 TV Series is a simple app that allows to overview details of the top most popular tv series. User can overview the list of the shows and tap on one in order to see its name, network, start date, end date and status. It is also possible to see show's fullsize image.
 
