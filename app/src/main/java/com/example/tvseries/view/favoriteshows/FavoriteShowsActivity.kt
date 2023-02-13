@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -28,8 +29,10 @@ class FavoriteShowsActivity : AppCompatActivity(),
     private lateinit var favoriteShowsRecyclerView: RecyclerView
     private lateinit var noFavoriteShowsInfo: TextView
     private lateinit var favoriteShowsListSection: LinearLayout
+    private lateinit var progressBar: ProgressBar
 
     private var adapter: FavoriteShowAdapter? = null
+    private var lockLongClick = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +46,7 @@ class FavoriteShowsActivity : AppCompatActivity(),
         noFavoriteShowsInfo = findViewById(R.id.noFavoriteShowsInfo)
         favoriteShowsListSection = findViewById(R.id.favoriteShowsList_section)
         favoriteShowsRecyclerView = findViewById(R.id.recyclerView_favoriteShowsList)
+        progressBar = findViewById(R.id.main_progressBar)
         favoriteShowsRecyclerView.layoutManager = GridLayoutManager(this, 3)
     }
 
@@ -51,7 +55,11 @@ class FavoriteShowsActivity : AppCompatActivity(),
     }
 
     override fun onItemLongClicked(item: FavoriteShow) {
-        presenter.delete(item)
+        if (!lockLongClick) {
+            progressBar.visibility = View.VISIBLE
+            lockLongClick = true
+            presenter.delete(item)
+        }
     }
 
     override fun initData() {
@@ -65,6 +73,9 @@ class FavoriteShowsActivity : AppCompatActivity(),
     }
 
     private fun refreshView(data: List<FavoriteShow>) {
+        lockLongClick = false
+        progressBar.visibility = View.GONE
+
         if (data.isEmpty()) {
             favoriteShowsListSection.visibility = View.INVISIBLE
             noFavoriteShowsInfo.visibility = View.VISIBLE

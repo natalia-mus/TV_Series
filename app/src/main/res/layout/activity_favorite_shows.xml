@@ -5,6 +5,18 @@
     android:layout_height="match_parent"
     android:background="@drawable/curtain">
 
+    <ProgressBar
+        android:id="@+id/main_progressBar"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:indeterminateTint="@color/black"
+        android:translationZ="90dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/noFavoriteShowsInfo"
         android:layout_width="wrap_content"
