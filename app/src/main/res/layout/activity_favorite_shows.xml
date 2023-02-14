@@ -6,7 +6,7 @@
     android:background="@drawable/curtain">
 
     <ProgressBar
-        android:id="@+id/main_progressBar"
+        android:id="@+id/favoriteShows_progressBar"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:indeterminateTint="@color/black"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/noFavoriteShowsInfo"
+        android:id="@+id/favoriteShows_noFavoriteShowsInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/no_favorite_shows"
@@ -31,7 +31,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/favoriteShowsList_section"
+        android:id="@+id/favoriteShows_favoriteShowsListSection"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -42,27 +42,27 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/hint"
+            android:id="@+id/favoriteShows_hint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="@string/hint_tap_and_hold_to_remove_item"
             android:textAlignment="center"
             android:textColor="@color/hint"
-            app:layout_constraintBottom_toTopOf="@+id/recyclerView_favoriteShowsList"
+            app:layout_constraintBottom_toTopOf="@+id/favoriteShows_favoriteShowsList"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView_favoriteShowsList"
+            android:id="@+id/favoriteShows_favoriteShowsList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/hint" />
+            app:layout_constraintTop_toBottomOf="@+id/favoriteShows_hint" />
 
     </LinearLayout>
 

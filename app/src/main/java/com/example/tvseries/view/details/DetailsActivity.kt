@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tvseries.R
 import com.example.tvseries.datamodel.SingleShow
+import com.example.tvseries.objects.Constants
 
 class DetailsActivity : AppCompatActivity(), OnImageClickAction {
 
@@ -13,11 +14,11 @@ class DetailsActivity : AppCompatActivity(), OnImageClickAction {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
 
-        val item: SingleShow? = intent.getParcelableExtra("item")
+        val item: SingleShow? = intent.getParcelableExtra(Constants.ITEM)
         onImageClicked = this
 
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.activity_details_fragment, DetailsFragment(item, onImageClicked))
+            replace(R.id.details_fragment, DetailsFragment(item, onImageClicked))
             commit()
         }
 
@@ -25,7 +26,7 @@ class DetailsActivity : AppCompatActivity(), OnImageClickAction {
 
     override fun onImageClicked(image: String?) {
         supportFragmentManager.beginTransaction()
-            .add(R.id.activity_details_fragment, ImageFragment(image))
+            .add(R.id.details_fragment, ImageFragment(image))
             .addToBackStack(null)
             .commit()
     }

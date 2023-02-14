@@ -27,11 +27,13 @@ class FavoriteShowAdapter(
     }
 
     override fun onBindViewHolder(holder: FavoriteShowViewHolder, position: Int) {
-        holder.name.text = favoriteShows[position].name
-        Glide.with(context).load(favoriteShows[position].image).into(holder.image)
+        val item = favoriteShows[position]
+
+        holder.name.text = item.name
+        Glide.with(context).load(item.image).into(holder.image)
 
         holder.item.setOnLongClickListener {
-            onItemLongClickAction.onItemLongClicked(favoriteShows[position])
+            onItemLongClickAction.onItemLongClicked(item)
             true
         }
     }
@@ -46,9 +48,9 @@ class FavoriteShowAdapter(
 
 
 class FavoriteShowViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    val item = view.findViewById<ConstraintLayout>(R.id.favoriteShow_item)
-    val image = view.findViewById<ImageView>(R.id.favoriteShow_image)
-    val name = view.findViewById<TextView>(R.id.favoriteShow_name)
+    val item: ConstraintLayout = view.findViewById(R.id.favoriteShow_item)
+    val image: ImageView = view.findViewById(R.id.favoriteShow_image)
+    val name: TextView = view.findViewById(R.id.favoriteShow_name)
 }
 
 

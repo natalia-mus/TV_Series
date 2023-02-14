@@ -8,7 +8,7 @@
     tools:context=".view.main.MainActivity">
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/main_progressBar"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:indeterminateTint="@color/black"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/errorInfo"
+        android:id="@+id/main_errorInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/no_data"
@@ -42,25 +42,25 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView_seriesList"
+            android:id="@+id/main_seriesList"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            app:layout_constraintBottom_toTopOf="@+id/hint"
+            app:layout_constraintBottom_toTopOf="@+id/main_hint"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/hint_section"
+            android:id="@+id/main_hintSection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="16dp"
             android:textAlignment="center"
             android:visibility="invisible"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerView_seriesList">
+            app:layout_constraintTop_toBottomOf="@+id/main_seriesList">
 
             <TextView
-                android:id="@+id/hint"
+                android:id="@+id/main_hint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/hint_swipe_to_see_more"
@@ -76,7 +76,7 @@
                 android:layout_marginEnd="8dp"
                 android:src="@drawable/ic_round_chevron_left_24"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/hint"
+                app:layout_constraintEnd_toStartOf="@+id/main_hint"
                 app:layout_constraintTop_toTopOf="parent"
                 app:tint="@color/hint_dark" />
 
@@ -86,7 +86,7 @@
                 android:layout_marginStart="8dp"
                 android:src="@drawable/ic_round_chevron_right_24"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/hint"
+                app:layout_constraintStart_toEndOf="@+id/main_hint"
                 app:layout_constraintTop_toTopOf="parent"
                 app:tint="@color/hint_dark" />
 

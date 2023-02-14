@@ -15,10 +15,10 @@ class DetailsFragmentPresenter :
         BaseApplication.baseApplicationComponent.inject(this)
     }
 
-    private lateinit var view: DetailsFragmentContract.DetailsFragmentView
-
     @Inject
     lateinit var model: RoomRepository
+
+    private lateinit var view: DetailsFragmentContract.DetailsFragmentView
 
     override fun setViewToPresenter(view: DetailsFragmentContract.DetailsFragmentView) {
         this.view = view
