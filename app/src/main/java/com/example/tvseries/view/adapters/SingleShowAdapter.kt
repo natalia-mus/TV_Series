@@ -43,8 +43,8 @@ class SingleShowAdapter(
 
 
 class SingleShowAdapterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    val showItem = itemView.findViewById<ConstraintLayout>(R.id.show_item)
-    val showImage = itemView.findViewById<ImageView>(R.id.show_image)
+    val showItem: ConstraintLayout = itemView.findViewById(R.id.showItem)
+    val showImage: ImageView = itemView.findViewById(R.id.showItem_image)
 }
 
 

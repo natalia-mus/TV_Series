@@ -33,13 +33,13 @@
                     android:layout_height="match_parent"
                     android:layout_marginBottom="50dp"
                     android:src="@drawable/ic_baseline_image_not_supported_24"
-                    app:layout_constraintBottom_toTopOf="@+id/hint"
+                    app:layout_constraintBottom_toTopOf="@+id/details_hint"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/hint"
+                    android:id="@+id/details_hint"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -84,7 +84,7 @@
                 </LinearLayout>
 
                 <ImageButton
-                    android:id="@+id/details_save_button"
+                    android:id="@+id/details_saveButton"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_margin="10dp"
@@ -94,14 +94,14 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/details_country_section"
+                android:id="@+id/details_countrySection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="5dp">
 
                 <TextView
-                    android:id="@+id/details_country_label"
+                    android:id="@+id/details_countryLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
@@ -121,13 +121,13 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/details_startDate_section"
+                android:id="@+id/details_startDateSection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp">
 
                 <TextView
-                    android:id="@+id/details_startDate_label"
+                    android:id="@+id/details_startDateLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
@@ -147,13 +147,13 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/details_endDate_section"
+                android:id="@+id/details_endDateSection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp">
 
                 <TextView
-                    android:id="@+id/details_endDate_label"
+                    android:id="@+id/details_endDateLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
@@ -173,13 +173,13 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/details_status_section"
+                android:id="@+id/details_statusSection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="40dp">
 
                 <TextView
-                    android:id="@+id/details_status_label"
+                    android:id="@+id/details_statusLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"

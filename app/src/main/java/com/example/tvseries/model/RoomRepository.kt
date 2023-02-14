@@ -9,7 +9,6 @@ import javax.inject.Inject
 class RoomRepository @Inject constructor() : DetailsFragmentContract.DetailsFragmentModel,
     FavoriteShowsActivityContract.FavoriteShowsActivityModel {
 
-
     @Inject
     lateinit var roomDatabase: FavoriteShowsDatabase
 

@@ -11,7 +11,9 @@ class MainActivityPresenter @Inject constructor() :
 
     @Inject
     lateinit var model: APIRepository
+
     private lateinit var view: MainActivityContract.MainActivityView
+
     private var status = false
 
     override fun setViewToPresenter(view: MainActivityContract.MainActivityView) {

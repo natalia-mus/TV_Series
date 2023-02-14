@@ -1,7 +1,6 @@
 package com.example.tvseries.dagger.modules
 
 import com.example.tvseries.API.APIService
-import com.example.tvseries.objects.UrlObject
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -11,11 +10,15 @@ import javax.inject.Singleton
 @Module
 class RetrofitModule {
 
+    companion object {
+        private const val BASE_URL = "https://www.episodate.com/api/"
+    }
+
     @Singleton
     @Provides
     fun provideRetrofit(): APIService {
         val retrofit = Retrofit.Builder()
-            .baseUrl(UrlObject.baseUrl)
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

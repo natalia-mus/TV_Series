@@ -14,6 +14,7 @@ import com.example.tvseries.R
 import com.example.tvseries.contracts.DetailsFragmentContract
 import com.example.tvseries.database.FavoriteShow
 import com.example.tvseries.datamodel.SingleShow
+import com.example.tvseries.objects.Constants
 import com.example.tvseries.presenter.DetailsFragmentPresenter
 
 class DetailsFragment(
@@ -54,7 +55,7 @@ class DetailsFragment(
         startDate = fragmentView.findViewById(R.id.details_startDate)
         endDate = fragmentView.findViewById(R.id.details_endDate)
         status = fragmentView.findViewById(R.id.details_status)
-        saveButton = fragmentView.findViewById(R.id.details_save_button)
+        saveButton = fragmentView.findViewById(R.id.details_saveButton)
 
         image.setOnClickListener() {
             onImageClickAction.onImageClicked(item?.image)
@@ -75,7 +76,7 @@ class DetailsFragment(
         status.text = item?.status
 
         if (item?.endDate.isNullOrEmpty()) {
-            endDate.text = "-"
+            endDate.text = Constants.NULL
         } else {
             endDate.text = item?.endDate
         }
@@ -88,7 +89,7 @@ class DetailsFragment(
 
         val favoriteShow = FavoriteShow(id, name, image)
         presenter.saveShow(favoriteShow)
-        Toast.makeText(activity, "Saved to favorites", Toast.LENGTH_SHORT).show()
+        Toast.makeText(activity, resources.getString(R.string.saved_to_favorites), Toast.LENGTH_SHORT).show()
     }
 
 }

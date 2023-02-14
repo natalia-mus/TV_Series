@@ -26,6 +26,7 @@ class FavoriteShowsActivity : AppCompatActivity(),
 
     private val context: Context = this
     private val presenter = FavoriteShowsActivityPresenter()
+
     private lateinit var favoriteShowsRecyclerView: RecyclerView
     private lateinit var noFavoriteShowsInfo: TextView
     private lateinit var favoriteShowsListSection: LinearLayout
@@ -43,10 +44,10 @@ class FavoriteShowsActivity : AppCompatActivity(),
     }
 
     override fun initView() {
-        noFavoriteShowsInfo = findViewById(R.id.noFavoriteShowsInfo)
-        favoriteShowsListSection = findViewById(R.id.favoriteShowsList_section)
-        favoriteShowsRecyclerView = findViewById(R.id.recyclerView_favoriteShowsList)
-        progressBar = findViewById(R.id.main_progressBar)
+        noFavoriteShowsInfo = findViewById(R.id.favoriteShows_noFavoriteShowsInfo)
+        favoriteShowsListSection = findViewById(R.id.favoriteShows_favoriteShowsListSection)
+        favoriteShowsRecyclerView = findViewById(R.id.favoriteShows_favoriteShowsList)
+        progressBar = findViewById(R.id.favoriteShows_progressBar)
         favoriteShowsRecyclerView.layoutManager = GridLayoutManager(this, 3)
     }
 

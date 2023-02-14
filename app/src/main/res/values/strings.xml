@@ -14,4 +14,6 @@
     <string name="go_to_favorites">Go to favorites</string>
     <string name="hint_tap_and_hold_to_remove_item">tap and hold to remove item</string>
     <string name="no_favorite_shows">no favorite shows</string>
+    <string name="data_can_not_be_loaded">Data can not be loaded</string>
+    <string name="saved_to_favorites">Saved to favorites</string>
 </resources>

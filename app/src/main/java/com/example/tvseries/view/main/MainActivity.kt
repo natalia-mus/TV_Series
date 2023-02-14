@@ -16,6 +16,7 @@ import com.example.tvseries.BaseApplication
 import com.example.tvseries.R
 import com.example.tvseries.contracts.MainActivityContract
 import com.example.tvseries.datamodel.SingleShow
+import com.example.tvseries.objects.Constants
 import com.example.tvseries.presenter.MainActivityPresenter
 import com.example.tvseries.view.adapters.OnItemClickAction
 import com.example.tvseries.view.adapters.SingleShowAdapter
@@ -25,13 +26,13 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView, OnItemClickAction {
 
+    @Inject
+    lateinit var presenter: MainActivityPresenter
+
     private lateinit var progressBar: ProgressBar
     private lateinit var errorInfo: TextView
     private lateinit var seriesListRecyclerView: RecyclerView
     private lateinit var hintSection: ConstraintLayout
-
-    @Inject
-    lateinit var presenter: MainActivityPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as BaseApplication).getBaseApplicationComponent().inject(this)
@@ -61,10 +62,10 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
     }
 
     override fun initView() {
-        progressBar = findViewById(R.id.progressBar)
-        errorInfo = findViewById(R.id.errorInfo)
-        seriesListRecyclerView = findViewById(R.id.recyclerView_seriesList)
-        hintSection = findViewById(R.id.hint_section)
+        progressBar = findViewById(R.id.main_progressBar)
+        errorInfo = findViewById(R.id.main_errorInfo)
+        seriesListRecyclerView = findViewById(R.id.main_seriesList)
+        hintSection = findViewById(R.id.main_hintSection)
         seriesListRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
     }
@@ -79,13 +80,13 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
             hintSection.visibility = View.VISIBLE
         } else {
             errorInfo.visibility = View.VISIBLE
-            Toast.makeText(this, "Data can not be loaded.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, resources.getString(R.string.data_can_not_be_loaded), Toast.LENGTH_SHORT).show()
         }
     }
 
     override fun onItemClicked(item: SingleShow) {
         val intent = Intent(this, DetailsActivity::class.java)
-        intent.putExtra("item", item)
+        intent.putExtra(Constants.ITEM, item)
         startActivity(intent)
     }
 
