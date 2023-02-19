@@ -66,8 +66,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
         errorInfo = findViewById(R.id.main_errorInfo)
         seriesListRecyclerView = findViewById(R.id.main_seriesList)
         hintSection = findViewById(R.id.main_hintSection)
-        seriesListRecyclerView.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        seriesListRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
     }
 
     override fun updateView() {

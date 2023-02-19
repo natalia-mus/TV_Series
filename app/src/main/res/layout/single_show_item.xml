@@ -5,14 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="20dp"
-    android:background="#000000">
+    android:background="#FFFFFF">
 
-    <ImageView
+    <LinearLayout
         android:id="@+id/showItem_upperVideotape"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:adjustViewBounds="true"
-        android:src="@drawable/videotape_frame"
+        android:background="@drawable/videotape"
+        android:orientation="horizontal"
+        android:tileMode="repeat"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
