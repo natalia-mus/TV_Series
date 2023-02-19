@@ -5,24 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="20dp"
-    android:background="#FFFFFF">
+    android:background="#000000">
 
-    <LinearLayout
+    <ImageView
         android:id="@+id/showItem_upperVideotape"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="30dp"
+        android:layout_marginVertical="12dp"
         android:background="@drawable/videotape"
-        android:orientation="horizontal"
-        android:tileMode="repeat"
+        app:layout_constraintBottom_toTopOf="@id/showItem_imageHolder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="60dp"
+        android:id="@+id/showItem_imageHolder"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/showItem_lowerVideotape"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,11 +42,12 @@
     <ImageView
         android:id="@+id/showItem_lowerVideotape"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:adjustViewBounds="true"
-        android:src="@drawable/videotape_frame"
+        android:layout_height="30dp"
+        android:layout_marginVertical="12dp"
+        android:background="@drawable/videotape"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/showItem_imageHolder" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
