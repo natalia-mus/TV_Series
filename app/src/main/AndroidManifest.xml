@@ -7,9 +7,9 @@
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_tv"
         android:label="@string/label_tv_series"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_tv_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TVSeries">
         <activity
