@@ -16,6 +16,7 @@ import com.example.tvseries.database.FavoriteShow
 import com.example.tvseries.datamodel.SingleShow
 import com.example.tvseries.objects.Constants
 import com.example.tvseries.presenter.DetailsFragmentPresenter
+import kotlinx.coroutines.*
 
 class DetailsFragment(
     private val item: SingleShow?,
@@ -62,7 +63,7 @@ class DetailsFragment(
         }
 
         saveButton.setOnClickListener() {
-            saveShow()
+            addToFavorites()
         }
     }
 
@@ -82,14 +83,35 @@ class DetailsFragment(
         }
     }
 
-    private fun saveShow() {
-        val id = item?.id.toString().toInt()
-        val name = item?.name.toString()
-        val image = item?.image.toString()
+    private fun addToFavorites() {
+        if (item != null) {
+            val id = item.id.toString().toInt()
+            val name = item.name
+            val image = item.image
+            val show = FavoriteShow(id, name, image)
 
-        val favoriteShow = FavoriteShow(id, name, image)
-        presenter.saveShow(favoriteShow)
-        Toast.makeText(activity, resources.getString(R.string.saved_to_favorites), Toast.LENGTH_SHORT).show()
+
+            GlobalScope.launch(Dispatchers.IO) {
+                val isInFavorites = isInFavorites(show)
+
+                withContext(Dispatchers.Main) {
+                    if (isInFavorites) {
+                        // TODO - delete from favorites
+
+                    } else {
+                        presenter.saveShow(show)
+                        Toast.makeText(activity, resources.getString(R.string.saved_to_favorites), Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+    }
+
+    private suspend fun isInFavorites(show: FavoriteShow): Boolean {
+        val result = GlobalScope.async {
+            presenter.isShowInFavorites(show)
+        }
+        return result.await()
     }
 
 }

@@ -11,6 +11,7 @@ interface DetailsFragmentContract {
     interface DetailsFragmentPresenter {
         fun setViewToPresenter(view: DetailsFragmentView)
         fun initView()
+        suspend fun isShowInFavorites(show: FavoriteShow): Boolean
         fun saveShow(show: FavoriteShow)
     }
 

@@ -21,6 +21,11 @@ class RoomRepository @Inject constructor() : DetailsFragmentContract.DetailsFrag
         roomDatabase.favoriteShowsDao().delete(show)
     }
 
-    override fun getAll() = roomDatabase.favoriteShowsDao().getAll()
+    override fun getFavoriteShows() = roomDatabase.favoriteShowsDao().getAll()
+
+    override fun isShowInFavorites(show: FavoriteShow): Boolean {
+        val favorites = getFavoriteShows()
+        return favorites.contains(show)
+    }
 
 }

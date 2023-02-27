@@ -5,6 +5,7 @@ import com.example.tvseries.contracts.DetailsFragmentContract
 import com.example.tvseries.database.FavoriteShow
 import com.example.tvseries.model.RoomRepository
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,6 +28,13 @@ class DetailsFragmentPresenter :
     override fun initView() {
         view.initView()
         view.initData()
+    }
+
+    override suspend fun isShowInFavorites(show: FavoriteShow): Boolean {
+        val result = GlobalScope.async {
+            model.isShowInFavorites(show)
+        }
+        return result.await()
     }
 
     override fun saveShow(show: FavoriteShow) {

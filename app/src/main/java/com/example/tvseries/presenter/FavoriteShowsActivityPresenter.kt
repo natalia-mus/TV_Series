@@ -35,7 +35,7 @@ class FavoriteShowsActivityPresenter :
 
     override suspend fun returnData(): List<FavoriteShow> {
         val data = GlobalScope.async {
-            model.getAll()
+            model.getFavoriteShows()
         }
         return data.await()
     }

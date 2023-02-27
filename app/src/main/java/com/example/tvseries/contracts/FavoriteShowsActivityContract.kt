@@ -6,7 +6,8 @@ interface FavoriteShowsActivityContract {
 
     interface FavoriteShowsActivityModel {
         fun delete(show: FavoriteShow)
-        fun getAll(): List<FavoriteShow>
+        fun getFavoriteShows(): List<FavoriteShow>
+        fun isShowInFavorites(show: FavoriteShow): Boolean
     }
 
     interface FavoriteShowsActivityPresenter {
