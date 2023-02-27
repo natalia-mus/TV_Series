@@ -40,9 +40,9 @@ class FavoriteShowsActivityPresenter :
         return data.await()
     }
 
-    override fun delete(item: FavoriteShow) {
+    override fun deleteShow(show: FavoriteShow) {
         GlobalScope.launch {
-            model.delete(item)
+            model.deleteShow(show)
             view.updateView()
         }
     }

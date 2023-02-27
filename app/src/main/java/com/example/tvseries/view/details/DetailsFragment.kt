@@ -63,7 +63,7 @@ class DetailsFragment(
         }
 
         saveButton.setOnClickListener() {
-            addToFavorites()
+            handleOnLikeButtonClick()
         }
     }
 
@@ -83,7 +83,7 @@ class DetailsFragment(
         }
     }
 
-    private fun addToFavorites() {
+    private fun handleOnLikeButtonClick() {
         if (item != null) {
             val id = item.id.toString().toInt()
             val name = item.name
@@ -96,7 +96,7 @@ class DetailsFragment(
 
                 withContext(Dispatchers.Main) {
                     if (isInFavorites) {
-                        // TODO - delete from favorites
+                        presenter.deleteShow(show)
 
                     } else {
                         presenter.saveShow(show)

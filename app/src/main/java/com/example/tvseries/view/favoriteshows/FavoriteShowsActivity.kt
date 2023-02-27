@@ -59,7 +59,7 @@ class FavoriteShowsActivity : AppCompatActivity(),
         if (!lockLongClick) {
             progressBar.visibility = View.VISIBLE
             lockLongClick = true
-            presenter.delete(item)
+            presenter.deleteShow(item)
         }
     }
 

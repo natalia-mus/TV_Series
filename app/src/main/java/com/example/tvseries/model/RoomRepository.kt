@@ -12,12 +12,12 @@ class RoomRepository @Inject constructor() : DetailsFragmentContract.DetailsFrag
     @Inject
     lateinit var roomDatabase: FavoriteShowsDatabase
 
-    override fun save(show: FavoriteShow) {
+    override fun saveShow(show: FavoriteShow) {
         roomDatabase.favoriteShowsDao().insert(show)
     }
 
 
-    override fun delete(show: FavoriteShow) {
+    override fun deleteShow(show: FavoriteShow) {
         roomDatabase.favoriteShowsDao().delete(show)
     }
 

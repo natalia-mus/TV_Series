@@ -5,7 +5,7 @@ import com.example.tvseries.database.FavoriteShow
 interface FavoriteShowsActivityContract {
 
     interface FavoriteShowsActivityModel {
-        fun delete(show: FavoriteShow)
+        fun deleteShow(show: FavoriteShow)
         fun getFavoriteShows(): List<FavoriteShow>
         fun isShowInFavorites(show: FavoriteShow): Boolean
     }
@@ -14,7 +14,7 @@ interface FavoriteShowsActivityContract {
         fun setViewToPresenter(view: FavoriteShowsActivityView)
         fun initView()
         suspend fun returnData(): List<FavoriteShow>
-        fun delete(item: FavoriteShow)
+        fun deleteShow(show: FavoriteShow)
     }
 
     interface FavoriteShowsActivityView {

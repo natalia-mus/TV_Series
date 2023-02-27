@@ -9,8 +9,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class DetailsFragmentPresenter :
-    DetailsFragmentContract.DetailsFragmentPresenter {
+class DetailsFragmentPresenter : DetailsFragmentContract.DetailsFragmentPresenter {
 
     init {
         BaseApplication.baseApplicationComponent.inject(this)
@@ -39,7 +38,13 @@ class DetailsFragmentPresenter :
 
     override fun saveShow(show: FavoriteShow) {
         GlobalScope.launch {
-            model.save(show)
+            model.saveShow(show)
+        }
+    }
+
+    override fun deleteShow(show: FavoriteShow) {
+        GlobalScope.launch {
+            model.deleteShow(show)
         }
     }
 

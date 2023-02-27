@@ -5,7 +5,8 @@ import com.example.tvseries.database.FavoriteShow
 interface DetailsFragmentContract {
 
     interface DetailsFragmentModel {
-        fun save(show: FavoriteShow)
+        fun saveShow(show: FavoriteShow)
+        fun deleteShow(show: FavoriteShow)
     }
 
     interface DetailsFragmentPresenter {
@@ -13,6 +14,7 @@ interface DetailsFragmentContract {
         fun initView()
         suspend fun isShowInFavorites(show: FavoriteShow): Boolean
         fun saveShow(show: FavoriteShow)
+        fun deleteShow(show: FavoriteShow)
     }
 
     interface DetailsFragmentView {
