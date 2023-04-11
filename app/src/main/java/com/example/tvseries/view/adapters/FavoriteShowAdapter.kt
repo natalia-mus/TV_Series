@@ -10,11 +10,11 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.tvseries.R
-import com.example.tvseries.database.FavoriteShow
+import com.example.tvseries.datamodel.SingleShow
 
 class FavoriteShowAdapter(
     private val context: Context,
-    private var favoriteShows: List<FavoriteShow>,
+    private var favoriteShows: List<SingleShow>,
     private val onItemLongClickAction: OnItemLongClickAction
 ) :
     RecyclerView.Adapter<FavoriteShowViewHolder>() {
@@ -40,7 +40,7 @@ class FavoriteShowAdapter(
 
     override fun getItemCount() = favoriteShows.size
 
-    fun dataSetChanged(newDataSet: List<FavoriteShow>) {
+    fun dataSetChanged(newDataSet: List<SingleShow>) {
         favoriteShows = newDataSet
         notifyDataSetChanged()
     }
@@ -55,5 +55,5 @@ class FavoriteShowViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
 
 interface OnItemLongClickAction {
-    fun onItemLongClicked(item: FavoriteShow)
+    fun onItemLongClicked(item: SingleShow)
 }

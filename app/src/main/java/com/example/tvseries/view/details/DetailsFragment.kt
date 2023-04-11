@@ -13,7 +13,6 @@ import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
 import com.example.tvseries.R
 import com.example.tvseries.contracts.DetailsFragmentContract
-import com.example.tvseries.database.FavoriteShow
 import com.example.tvseries.datamodel.SingleShow
 import com.example.tvseries.objects.Constants
 import com.example.tvseries.presenter.DetailsFragmentPresenter
@@ -23,7 +22,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class DetailsFragment(
-    private val item: SingleShow?,
+    private val show: SingleShow?,
     private val onImageClickAction: OnImageClickAction
 ) : Fragment(), DetailsFragmentContract.DetailsFragmentView {
 
@@ -67,7 +66,7 @@ class DetailsFragment(
         saveButton = fragmentView.findViewById(R.id.details_saveButton)
 
         image.setOnClickListener() {
-            onImageClickAction.onImageClicked(item?.image)
+            onImageClickAction.onImageClicked(show?.image)
         }
 
         saveButton.setOnClickListener() {
@@ -76,35 +75,29 @@ class DetailsFragment(
     }
 
     override fun initData() {
-        if (item != null) {
-            Glide.with(this).load(item.image).into(image)
+        if (show != null) {
+            Glide.with(this).load(show.image).into(image)
 
-            name.text = item.name
-            network.text = item.network
-            country.text = item.country
-            startDate.text = item.startDate
-            status.text = item.status
+            name.text = show.name
+            network.text = show.network
+            country.text = show.country
+            startDate.text = show.startDate
+            status.text = show.status
 
-            if (item.endDate.isNullOrEmpty()) {
+            if (show.endDate.isNullOrEmpty()) {
                 endDate.text = Constants.NULL
             } else {
-                endDate.text = item.endDate
+                endDate.text = show.endDate
             }
 
-            val show = FavoriteShow(item.id, item.name, item.image)
             GlobalScope.launch {
-                isInFavorites(show)
+                isInFavorites()
             }
         }
     }
 
     private fun handleOnLikeButtonClick() {
-        if (item != null) {
-            val id = item.id.toString().toInt()
-            val name = item.name
-            val image = item.image
-            val show = FavoriteShow(id, name, image)
-
+        if (show != null) {
             if (isInFavorites.value == true) {
                 presenter.deleteShow(show)
                 isInFavorites.value = false
@@ -127,12 +120,14 @@ class DetailsFragment(
         saveButton.drawable.setTint(color)
     }
 
-    private suspend fun isInFavorites(show: FavoriteShow) {
-        GlobalScope.launch(Dispatchers.IO) {
-            val result = presenter.isShowInFavorites(show)
+    private suspend fun isInFavorites() {
+        if (show != null) {
+            GlobalScope.launch(Dispatchers.IO) {
+                val result = presenter.isShowInFavorites(show)
 
-            withContext(Dispatchers.Main) {
-                isInFavorites.value = result
+                withContext(Dispatchers.Main) {
+                    isInFavorites.value = result
+                }
             }
         }
     }

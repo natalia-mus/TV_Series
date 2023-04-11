@@ -2,7 +2,7 @@ package com.example.tvseries.presenter
 
 import com.example.tvseries.BaseApplication
 import com.example.tvseries.contracts.DetailsFragmentContract
-import com.example.tvseries.database.FavoriteShow
+import com.example.tvseries.datamodel.SingleShow
 import com.example.tvseries.model.RoomRepository
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -29,20 +29,20 @@ class DetailsFragmentPresenter : DetailsFragmentContract.DetailsFragmentPresente
         view.initData()
     }
 
-    override suspend fun isShowInFavorites(show: FavoriteShow): Boolean {
+    override suspend fun isShowInFavorites(show: SingleShow): Boolean {
         val result = GlobalScope.async {
             model.isShowInFavorites(show)
         }
         return result.await()
     }
 
-    override fun saveShow(show: FavoriteShow) {
+    override fun saveShow(show: SingleShow) {
         GlobalScope.launch {
             model.saveShow(show)
         }
     }
 
-    override fun deleteShow(show: FavoriteShow) {
+    override fun deleteShow(show: SingleShow) {
         GlobalScope.launch {
             model.deleteShow(show)
         }
