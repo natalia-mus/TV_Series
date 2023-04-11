@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
 import com.example.tvseries.R
 import com.example.tvseries.contracts.DetailsFragmentContract
@@ -39,7 +40,7 @@ class DetailsFragment(
     private lateinit var saveButton: ImageButton
     private lateinit var fragmentView: View
 
-    private var isInFavorites = false
+    private var isInFavorites = MutableLiveData<Boolean>().apply { this.value = false }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,6 +50,8 @@ class DetailsFragment(
         fragmentView = inflater.inflate(R.layout.fragment_details, container, false)
         presenter.setViewToPresenter(this)
         presenter.initView()
+
+        isInFavorites.observe(this) { setSaveButtonIconColor(it) }
 
         return fragmentView
     }
@@ -102,16 +105,15 @@ class DetailsFragment(
             val image = item.image
             val show = FavoriteShow(id, name, image)
 
-            if (isInFavorites) {
+            if (isInFavorites.value == true) {
                 presenter.deleteShow(show)
+                isInFavorites.value = false
 
             } else {
                 presenter.saveShow(show)
                 Toast.makeText(activity, resources.getString(R.string.saved_to_favorites), Toast.LENGTH_SHORT).show()
+                isInFavorites.value = true
             }
-
-            isInFavorites = !isInFavorites
-            setSaveButtonIconColor(isInFavorites)
         }
     }
 
@@ -130,8 +132,7 @@ class DetailsFragment(
             val result = presenter.isShowInFavorites(show)
 
             withContext(Dispatchers.Main) {
-                isInFavorites = result
-                setSaveButtonIconColor(isInFavorites)
+                isInFavorites.value = result
             }
         }
     }
