@@ -9,8 +9,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.tvseries.R
-import com.example.tvseries.datamodel.SingleShow
 import com.example.tvseries.datamodel.TVSeries
+import com.example.tvseries.view.OnItemClickAction
 
 class SingleShowAdapter(
     private val context: Context,
@@ -45,9 +45,4 @@ class SingleShowAdapter(
 class SingleShowAdapterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val showItem: ConstraintLayout = itemView.findViewById(R.id.showItem)
     val showImage: ImageView = itemView.findViewById(R.id.showItem_image)
-}
-
-
-interface OnItemClickAction {
-    fun onItemClicked(item: SingleShow)
 }

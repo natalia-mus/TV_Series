@@ -11,10 +11,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.tvseries.R
 import com.example.tvseries.datamodel.SingleShow
+import com.example.tvseries.view.OnItemClickAction
+import com.example.tvseries.view.OnItemLongClickAction
 
 class FavoriteShowAdapter(
     private val context: Context,
     private var favoriteShows: List<SingleShow>,
+    private val onItemClickAction: OnItemClickAction,
     private val onItemLongClickAction: OnItemLongClickAction
 ) :
     RecyclerView.Adapter<FavoriteShowViewHolder>() {
@@ -31,6 +34,10 @@ class FavoriteShowAdapter(
 
         holder.name.text = item.name
         Glide.with(context).load(item.image).into(holder.image)
+
+        holder.item.setOnClickListener {
+            onItemClickAction.onItemClicked(item)
+        }
 
         holder.item.setOnLongClickListener {
             onItemLongClickAction.onItemLongClicked(item)
@@ -51,9 +58,4 @@ class FavoriteShowViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val item: ConstraintLayout = view.findViewById(R.id.favoriteShow_item)
     val image: ImageView = view.findViewById(R.id.favoriteShow_image)
     val name: TextView = view.findViewById(R.id.favoriteShow_name)
-}
-
-
-interface OnItemLongClickAction {
-    fun onItemLongClicked(item: SingleShow)
 }

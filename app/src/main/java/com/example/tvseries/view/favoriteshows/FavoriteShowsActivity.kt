@@ -1,6 +1,7 @@
 package com.example.tvseries.view.favoriteshows
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
@@ -12,9 +13,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.tvseries.R
 import com.example.tvseries.contracts.FavoriteShowsActivityContract
 import com.example.tvseries.datamodel.SingleShow
+import com.example.tvseries.objects.Constants
 import com.example.tvseries.presenter.FavoriteShowsActivityPresenter
+import com.example.tvseries.view.OnItemClickAction
+import com.example.tvseries.view.OnItemLongClickAction
 import com.example.tvseries.view.adapters.FavoriteShowAdapter
-import com.example.tvseries.view.adapters.OnItemLongClickAction
+import com.example.tvseries.view.details.DetailsActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -22,6 +26,7 @@ import kotlinx.coroutines.withContext
 
 class FavoriteShowsActivity : AppCompatActivity(),
     FavoriteShowsActivityContract.FavoriteShowsActivityView,
+    OnItemClickAction,
     OnItemLongClickAction {
 
     private val context: Context = this
@@ -55,6 +60,12 @@ class FavoriteShowsActivity : AppCompatActivity(),
         initData()
     }
 
+    override fun onItemClicked(item: SingleShow) {
+        val intent = Intent(this, DetailsActivity::class.java)
+        intent.putExtra(Constants.ITEM, item)
+        startActivity(intent)
+    }
+
     override fun onItemLongClicked(item: SingleShow) {
         if (!lockLongClick) {
             progressBar.visibility = View.VISIBLE
@@ -82,7 +93,7 @@ class FavoriteShowsActivity : AppCompatActivity(),
             noFavoriteShowsInfo.visibility = View.VISIBLE
         } else {
             if (adapter == null) {
-                favoriteShowsRecyclerView.adapter = FavoriteShowAdapter(context, data, this@FavoriteShowsActivity)
+                favoriteShowsRecyclerView.adapter = FavoriteShowAdapter(context, data, this@FavoriteShowsActivity, this@FavoriteShowsActivity)
                 adapter = favoriteShowsRecyclerView.adapter as FavoriteShowAdapter
 
             } else {
