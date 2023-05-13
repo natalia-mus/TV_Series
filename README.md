@@ -12,3 +12,9 @@ To display images in application Glide library was helpful.
 
 API source: [episodate.com/api](https://www.episodate.com/api).
 Background image comes from [pixabay.com](https://pixabay.com).
+
+<br/><br/>
+
+## Author
+
+[Natalia Muskała](https://github.com/natalia-mus)
