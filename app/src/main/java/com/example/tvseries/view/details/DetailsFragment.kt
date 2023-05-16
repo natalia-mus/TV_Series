@@ -9,16 +9,20 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
 import com.example.tvseries.R
 import com.example.tvseries.contracts.DetailsFragmentContract
-import com.example.tvseries.database.FavoriteShow
 import com.example.tvseries.datamodel.SingleShow
 import com.example.tvseries.objects.Constants
 import com.example.tvseries.presenter.DetailsFragmentPresenter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DetailsFragment(
-    private val item: SingleShow?,
+    private val show: SingleShow?,
     private val onImageClickAction: OnImageClickAction
 ) : Fragment(), DetailsFragmentContract.DetailsFragmentView {
 
@@ -32,8 +36,10 @@ class DetailsFragment(
     private lateinit var endDate: TextView
     private lateinit var status: TextView
 
-    lateinit var saveButton: ImageButton
-    lateinit var fragmentView: View
+    private lateinit var saveButton: ImageButton
+    private lateinit var fragmentView: View
+
+    private var isInFavorites = MutableLiveData<Boolean>().apply { this.value = false }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,6 +49,8 @@ class DetailsFragment(
         fragmentView = inflater.inflate(R.layout.fragment_details, container, false)
         presenter.setViewToPresenter(this)
         presenter.initView()
+
+        isInFavorites.observe(this) { setSaveButtonIconColor(it) }
 
         return fragmentView
     }
@@ -58,38 +66,70 @@ class DetailsFragment(
         saveButton = fragmentView.findViewById(R.id.details_saveButton)
 
         image.setOnClickListener() {
-            onImageClickAction.onImageClicked(item?.image)
+            onImageClickAction.onImageClicked(show?.image)
         }
 
         saveButton.setOnClickListener() {
-            saveShow()
+            handleOnLikeButtonClick()
         }
     }
 
     override fun initData() {
-        Glide.with(this).load(item?.image).into(image)
+        if (show != null) {
+            Glide.with(this).load(show.image).into(image)
 
-        name.text = item?.name
-        network.text = item?.network
-        country.text = item?.country
-        startDate.text = item?.startDate
-        status.text = item?.status
+            name.text = show.name
+            network.text = show.network
+            country.text = show.country
+            startDate.text = show.startDate
+            status.text = show.status
 
-        if (item?.endDate.isNullOrEmpty()) {
-            endDate.text = Constants.NULL
-        } else {
-            endDate.text = item?.endDate
+            if (show.endDate.isNullOrEmpty()) {
+                endDate.text = Constants.NULL
+            } else {
+                endDate.text = show.endDate
+            }
+
+            GlobalScope.launch {
+                isInFavorites()
+            }
         }
     }
 
-    private fun saveShow() {
-        val id = item?.id.toString().toInt()
-        val name = item?.name.toString()
-        val image = item?.image.toString()
+    private fun handleOnLikeButtonClick() {
+        if (show != null) {
+            if (isInFavorites.value == true) {
+                presenter.deleteShow(show)
+                isInFavorites.value = false
 
-        val favoriteShow = FavoriteShow(id, name, image)
-        presenter.saveShow(favoriteShow)
-        Toast.makeText(activity, resources.getString(R.string.saved_to_favorites), Toast.LENGTH_SHORT).show()
+            } else {
+                presenter.saveShow(show)
+                Toast.makeText(activity, resources.getString(R.string.saved_to_favorites), Toast.LENGTH_SHORT).show()
+                isInFavorites.value = true
+            }
+        }
+    }
+
+    private fun setSaveButtonIconColor(isInFavorites: Boolean) {
+        var color = resources.getColor(R.color.white, null)
+
+        if (isInFavorites) {
+            color = resources.getColor(R.color.pink, null)
+        }
+
+        saveButton.drawable.setTint(color)
+    }
+
+    private suspend fun isInFavorites() {
+        if (show != null) {
+            GlobalScope.launch(Dispatchers.IO) {
+                val result = presenter.isShowInFavorites(show)
+
+                withContext(Dispatchers.Main) {
+                    isInFavorites.value = result
+                }
+            }
+        }
     }
 
 }

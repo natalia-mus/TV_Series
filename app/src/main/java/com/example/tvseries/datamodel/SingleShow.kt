@@ -1,11 +1,16 @@
 package com.example.tvseries.datamodel
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.example.tvseries.objects.DatabaseObject
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
+@Entity(tableName = DatabaseObject.tableName)
 @Parcelize
 data class SingleShow(
+    @PrimaryKey
     val id: Int,
     val name: String,
     @SerializedName("start_date")

@@ -1,17 +1,20 @@
 package com.example.tvseries.contracts
 
-import com.example.tvseries.database.FavoriteShow
+import com.example.tvseries.datamodel.SingleShow
 
 interface DetailsFragmentContract {
 
     interface DetailsFragmentModel {
-        fun save(show: FavoriteShow)
+        fun saveShow(show: SingleShow)
+        fun deleteShow(show: SingleShow)
     }
 
     interface DetailsFragmentPresenter {
         fun setViewToPresenter(view: DetailsFragmentView)
         fun initView()
-        fun saveShow(show: FavoriteShow)
+        suspend fun isShowInFavorites(show: SingleShow): Boolean
+        fun saveShow(show: SingleShow)
+        fun deleteShow(show: SingleShow)
     }
 
     interface DetailsFragmentView {
