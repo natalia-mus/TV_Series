@@ -16,4 +16,5 @@
     <string name="no_favorite_shows">no favorite shows</string>
     <string name="data_can_not_be_loaded">Data can not be loaded</string>
     <string name="saved_to_favorites">Saved to favorites</string>
+    <string name="search">search</string>
 </resources>

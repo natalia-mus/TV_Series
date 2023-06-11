@@ -9,6 +9,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -39,6 +40,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setToolbar()
 
         presenter.setViewToPresenter(this)
         presenter.fetchData()
@@ -48,6 +50,11 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
         super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.main_menu, menu)
         return true
+    }
+
+    private fun setToolbar() {
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
