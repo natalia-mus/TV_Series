@@ -17,4 +17,7 @@
     <string name="data_can_not_be_loaded">Data can not be loaded</string>
     <string name="saved_to_favorites">Saved to favorites</string>
     <string name="search">search</string>
+    <string name="popular_shows">popular shows</string>
+    <string name="search_results">search results</string>
+    <string name="no_results">no results</string>
 </resources>
