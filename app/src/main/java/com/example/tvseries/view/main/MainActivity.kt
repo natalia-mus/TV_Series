@@ -1,10 +1,12 @@
 package com.example.tvseries.view.main
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -40,7 +42,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setToolbar()
+        setView()
 
         presenter.setViewToPresenter(this)
         presenter.fetchData()
@@ -50,11 +52,6 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
         super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.main_menu, menu)
         return true
-    }
-
-    private fun setToolbar() {
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -94,6 +91,28 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
         val intent = Intent(this, DetailsActivity::class.java)
         intent.putExtra(Constants.ITEM, item)
         startActivity(intent)
+    }
+
+    private fun hideKeyboard() {
+        val inputMethodManager = this.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        val view = (this as Activity).findViewById<View>(android.R.id.content).rootView
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    private fun setToolbar() {
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+    }
+
+    private fun setView() {
+        setToolbar()
+
+        searchButton = findViewById(R.id.toolbar_search_button)
+        searchField = findViewById(R.id.toolbar_search_field)
+
+        searchButton.setOnClickListener {
+            hideKeyboard()
+        }
     }
 
 }
