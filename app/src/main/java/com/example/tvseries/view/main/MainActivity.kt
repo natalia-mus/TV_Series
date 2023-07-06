@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -34,6 +32,8 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
     private lateinit var errorInfo: TextView
     private lateinit var seriesListRecyclerView: RecyclerView
     private lateinit var hintSection: ConstraintLayout
+    private lateinit var searchField: EditText
+    private lateinit var searchButton: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as BaseApplication).getBaseApplicationComponent().inject(this)
