@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
         setView()
 
         presenter.setViewToPresenter(this)
-        presenter.fetchData()
+        presenter.fetchAllSeries()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -99,6 +99,12 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
+    private fun searchByPhrase() {
+        hideKeyboard()
+        val phrase = searchField.text.toString()
+        presenter.fetchMatchingSeries(phrase)
+    }
+
     private fun setToolbar() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -111,7 +117,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
         searchField = findViewById(R.id.toolbar_search_field)
 
         searchButton.setOnClickListener {
-            hideKeyboard()
+            searchByPhrase()
         }
     }
 
