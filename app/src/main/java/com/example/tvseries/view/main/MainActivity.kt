@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
     private lateinit var hintSection: ConstraintLayout
     private lateinit var searchField: EditText
     private lateinit var searchButton: ImageButton
+    private lateinit var header: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as BaseApplication).getBaseApplicationComponent().inject(this)
@@ -81,8 +82,10 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
             val data = presenter.returnData()
             seriesListRecyclerView.adapter = SingleShowAdapter(this, data, this)
             hintSection.visibility = View.VISIBLE
+            header.visibility = View.VISIBLE
         } else {
             errorInfo.visibility = View.VISIBLE
+            header.visibility = View.GONE
             Toast.makeText(this, resources.getString(R.string.data_can_not_be_loaded), Toast.LENGTH_SHORT).show()
         }
     }
@@ -100,9 +103,10 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
     }
 
     private fun searchByPhrase() {
-        hideKeyboard()
         val phrase = searchField.text.toString()
         presenter.fetchMatchingSeries(phrase)
+        header.text = resources.getString(R.string.search_results)
+        hideKeyboard()
     }
 
     private fun setToolbar() {
@@ -113,8 +117,9 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
     private fun setView() {
         setToolbar()
 
-        searchButton = findViewById(R.id.toolbar_search_button)
         searchField = findViewById(R.id.toolbar_search_field)
+        searchButton = findViewById(R.id.toolbar_search_button)
+        header = findViewById(R.id.main_header)
 
         searchButton.setOnClickListener {
             searchByPhrase()
