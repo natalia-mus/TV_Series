@@ -30,7 +30,6 @@ class SingleShowAdapter(
     override fun onBindViewHolder(holder: SingleShowAdapterViewHolder, position: Int) {
         Glide.with(holder.itemView)
             .load(seriesList[position].image)
-            .centerCrop()
             .into(holder.showImage)
 
         holder.showItem.setOnClickListener() {
