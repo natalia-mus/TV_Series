@@ -7,13 +7,15 @@ interface MainActivityContract {
 
     interface MainActivityModel {
         fun fetchAllSeriesFromAPI(callback: RepositoryCallback<TVSeries>)
+        fun fetchMatchingSeriesFromAPI(phrase: String, callback: RepositoryCallback<TVSeries>)
         fun setData(data: TVSeries)
         fun returnData(): TVSeries
     }
 
     interface MainActivityPresenter {
         fun setViewToPresenter(view: MainActivityView)
-        fun fetchData()
+        fun fetchAllSeries()
+        fun fetchMatchingSeries(phrase: String)
         fun returnStatus(): Boolean
         fun returnData(): TVSeries
     }

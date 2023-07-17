@@ -9,6 +9,9 @@ import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 
+// https://www.episodate.com/api/most-popular
+// https://www.episodate.com/api/search?q=dance
+
 class APIRepository @Inject constructor() : MainActivityContract.MainActivityModel {
 
     @Inject
@@ -32,9 +35,26 @@ class APIRepository @Inject constructor() : MainActivityContract.MainActivityMod
         })
     }
 
+    override fun fetchMatchingSeriesFromAPI(phrase: String, callback: RepositoryCallback<TVSeries>) {
+        apiService.fetchMatchingSeries(phrase).enqueue(object : Callback<TVSeries> {
+            override fun onFailure(call: Call<TVSeries>, t: Throwable) {
+                callback.onError()
+            }
+
+            override fun onResponse(call: Call<TVSeries>, response: Response<TVSeries>) {
+                if (response.isSuccessful) {
+                    response.body()?.let { callback.onSuccess(it) }
+                } else {
+                    callback.onError()
+                }
+            }
+        })
+    }
+
     override fun setData(data: TVSeries) {
         this.data = data
     }
 
     override fun returnData() = data
+
 }

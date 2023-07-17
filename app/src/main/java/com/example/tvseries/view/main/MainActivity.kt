@@ -1,14 +1,15 @@
 package com.example.tvseries.view.main
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.view.inputmethod.InputMethodManager
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -33,15 +34,19 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
     private lateinit var errorInfo: TextView
     private lateinit var seriesListRecyclerView: RecyclerView
     private lateinit var hintSection: ConstraintLayout
+    private lateinit var searchField: EditText
+    private lateinit var searchButton: ImageButton
+    private lateinit var header: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as BaseApplication).getBaseApplicationComponent().inject(this)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setView()
 
         presenter.setViewToPresenter(this)
-        presenter.fetchData()
+        presenter.fetchAllSeries()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -77,8 +82,10 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
             val data = presenter.returnData()
             seriesListRecyclerView.adapter = SingleShowAdapter(this, data, this)
             hintSection.visibility = View.VISIBLE
+            header.visibility = View.VISIBLE
         } else {
             errorInfo.visibility = View.VISIBLE
+            header.visibility = View.GONE
             Toast.makeText(this, resources.getString(R.string.data_can_not_be_loaded), Toast.LENGTH_SHORT).show()
         }
     }
@@ -87,6 +94,36 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
         val intent = Intent(this, DetailsActivity::class.java)
         intent.putExtra(Constants.ITEM, item)
         startActivity(intent)
+    }
+
+    private fun hideKeyboard() {
+        val inputMethodManager = this.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        val view = (this as Activity).findViewById<View>(android.R.id.content).rootView
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    private fun searchByPhrase() {
+        val phrase = searchField.text.toString()
+        presenter.fetchMatchingSeries(phrase)
+        header.text = resources.getString(R.string.search_results)
+        hideKeyboard()
+    }
+
+    private fun setToolbar() {
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+    }
+
+    private fun setView() {
+        setToolbar()
+
+        searchField = findViewById(R.id.toolbar_search_field)
+        searchButton = findViewById(R.id.toolbar_search_button)
+        header = findViewById(R.id.main_header)
+
+        searchButton.setOnClickListener {
+            searchByPhrase()
+        }
     }
 
 }

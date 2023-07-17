@@ -21,8 +21,23 @@ class MainActivityPresenter @Inject constructor() :
         view.initView()
     }
 
-    override fun fetchData() {
+    override fun fetchAllSeries() {
         model.fetchAllSeriesFromAPI(object : RepositoryCallback<TVSeries> {
+            override fun onError() {
+                status = false
+                view.updateView()
+            }
+
+            override fun onSuccess(data: TVSeries) {
+                status = true
+                model.setData(data)
+                view.updateView()
+            }
+        })
+    }
+
+    override fun fetchMatchingSeries(phrase: String) {
+        model.fetchMatchingSeriesFromAPI(phrase, object : RepositoryCallback<TVSeries> {
             override fun onError() {
                 status = false
                 view.updateView()
