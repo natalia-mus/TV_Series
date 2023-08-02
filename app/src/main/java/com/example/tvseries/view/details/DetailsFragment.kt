@@ -35,6 +35,7 @@ class DetailsFragment(
     private lateinit var startDate: TextView
     private lateinit var endDate: TextView
     private lateinit var status: TextView
+    private lateinit var description: TextView
 
     private lateinit var saveButton: ImageButton
     private lateinit var fragmentView: View
@@ -63,6 +64,7 @@ class DetailsFragment(
         startDate = fragmentView.findViewById(R.id.details_startDate)
         endDate = fragmentView.findViewById(R.id.details_endDate)
         status = fragmentView.findViewById(R.id.details_status)
+        description = fragmentView.findViewById(R.id.details_description)
         saveButton = fragmentView.findViewById(R.id.details_saveButton)
 
         image.setOnClickListener() {
