@@ -14,7 +14,7 @@ class DetailsActivity : AppCompatActivity(), OnImageClickAction {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
 
-        val item: SingleShow? = intent.getParcelableExtra(Constants.ITEM)
+        val item: SingleShow? = intent.getParcelableExtra(Constants.ITEM_ID)
         onImageClicked = this
 
         supportFragmentManager.beginTransaction().apply {

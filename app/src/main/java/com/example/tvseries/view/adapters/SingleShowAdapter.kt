@@ -22,8 +22,7 @@ class SingleShowAdapter(
     private val seriesList = tvSeries.tvShows
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SingleShowAdapterViewHolder {
-        val layoutInflater =
-            LayoutInflater.from(context).inflate(R.layout.single_show_item, parent, false)
+        val layoutInflater = LayoutInflater.from(context).inflate(R.layout.single_show_item, parent, false)
         return SingleShowAdapterViewHolder(layoutInflater)
     }
 
@@ -33,7 +32,7 @@ class SingleShowAdapter(
             .into(holder.showImage)
 
         holder.showItem.setOnClickListener() {
-            onItemClickAction.onItemClicked(seriesList[position])
+            onItemClickAction.onItemClicked(seriesList[position].id)
         }
     }
 

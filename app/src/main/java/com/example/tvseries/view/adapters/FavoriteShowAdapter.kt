@@ -36,7 +36,7 @@ class FavoriteShowAdapter(
         Glide.with(context).load(item.image).into(holder.image)
 
         holder.item.setOnClickListener {
-            onItemClickAction.onItemClicked(item)
+            onItemClickAction.onItemClicked(item.id)
         }
 
         holder.item.setOnLongClickListener {

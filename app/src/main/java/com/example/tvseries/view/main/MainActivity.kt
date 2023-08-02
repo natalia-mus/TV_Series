@@ -90,9 +90,9 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
         }
     }
 
-    override fun onItemClicked(item: SingleShow) {
+    override fun onItemClicked(itemId: Int) {
         val intent = Intent(this, DetailsActivity::class.java)
-        intent.putExtra(Constants.ITEM, item)
+        intent.putExtra(Constants.ITEM_ID, itemId)
         startActivity(intent)
     }
 
