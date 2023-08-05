@@ -12,7 +12,7 @@ import com.example.tvseries.R
 import com.example.tvseries.datamodel.TVSeries
 import com.example.tvseries.view.OnItemClickAction
 
-class SingleShowAdapter(
+class TVShowsAdapter(
     private val context: Context,
     tvSeries: TVSeries,
     private val onItemClickAction: OnItemClickAction

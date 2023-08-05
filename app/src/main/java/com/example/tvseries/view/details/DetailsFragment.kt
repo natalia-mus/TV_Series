@@ -7,22 +7,19 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
 import com.example.tvseries.R
 import com.example.tvseries.contracts.DetailsFragmentContract
-import com.example.tvseries.datamodel.SingleShow
+import com.example.tvseries.datamodel.TVShow
 import com.example.tvseries.objects.Constants
 import com.example.tvseries.presenter.DetailsFragmentPresenter
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class DetailsFragment(
-    private val show: SingleShow?,
+    private val showId: Int?,
     private val onImageClickAction: OnImageClickAction
 ) : Fragment(), DetailsFragmentContract.DetailsFragmentView {
 
@@ -49,7 +46,7 @@ class DetailsFragment(
     ): View {
         fragmentView = inflater.inflate(R.layout.fragment_details, container, false)
         presenter.setViewToPresenter(this)
-        presenter.initView()
+        showId?.let { presenter.initView(it) }
 
         isInFavorites.observe(this) { setSaveButtonIconColor(it) }
 
@@ -67,49 +64,47 @@ class DetailsFragment(
         description = fragmentView.findViewById(R.id.details_description)
         saveButton = fragmentView.findViewById(R.id.details_saveButton)
 
-        image.setOnClickListener() {
-            onImageClickAction.onImageClicked(show?.image)
-        }
+//        image.setOnClickListener() {
+//            onImageClickAction.onImageClicked(show?.image)
+//        }
 
         saveButton.setOnClickListener() {
             handleOnLikeButtonClick()
         }
     }
 
-    override fun initData() {
-        if (show != null) {
-            Glide.with(this).load(show.image).into(image)
+    override fun initData(show: TVShow) {
+        Glide.with(this).load(show.image).into(image)
 
-            name.text = show.name
-            network.text = show.network
-            country.text = show.country
-            startDate.text = show.startDate
-            status.text = show.status
+        name.text = show.name
+        network.text = show.network
+        country.text = show.country
+        startDate.text = show.startDate
+        status.text = show.status
 
-            if (show.endDate.isNullOrEmpty()) {
-                endDate.text = Constants.NULL
-            } else {
-                endDate.text = show.endDate
-            }
+        if (show.endDate.isNullOrEmpty()) {
+            endDate.text = Constants.NULL
+        } else {
+            endDate.text = show.endDate
+        }
 
-            GlobalScope.launch {
-                isInFavorites()
-            }
+        GlobalScope.launch {
+            isInFavorites()
         }
     }
 
     private fun handleOnLikeButtonClick() {
-        if (show != null) {
-            if (isInFavorites.value == true) {
-                presenter.deleteShow(show)
-                isInFavorites.value = false
-
-            } else {
-                presenter.saveShow(show)
-                Toast.makeText(activity, resources.getString(R.string.saved_to_favorites), Toast.LENGTH_SHORT).show()
-                isInFavorites.value = true
-            }
-        }
+//        if (show != null) {
+//            if (isInFavorites.value == true) {
+//                presenter.deleteShow(show)
+//                isInFavorites.value = false
+//
+//            } else {
+//                presenter.saveShow(show)
+//                Toast.makeText(activity, resources.getString(R.string.saved_to_favorites), Toast.LENGTH_SHORT).show()
+//                isInFavorites.value = true
+//            }
+//        }
     }
 
     private fun setSaveButtonIconColor(isInFavorites: Boolean) {
@@ -123,15 +118,15 @@ class DetailsFragment(
     }
 
     private suspend fun isInFavorites() {
-        if (show != null) {
-            GlobalScope.launch(Dispatchers.IO) {
-                val result = presenter.isShowInFavorites(show)
-
-                withContext(Dispatchers.Main) {
-                    isInFavorites.value = result
-                }
-            }
-        }
+//        if (show != null) {
+//            GlobalScope.launch(Dispatchers.IO) {
+//                val result = presenter.isShowInFavorites(show)
+//
+//                withContext(Dispatchers.Main) {
+//                    isInFavorites.value = result
+//                }
+//            }
+//        }
     }
 
 }

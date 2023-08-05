@@ -3,6 +3,7 @@ package com.example.tvseries.model
 import com.example.tvseries.API.APIService
 import com.example.tvseries.API.RepositoryCallback
 import com.example.tvseries.contracts.MainActivityContract
+import com.example.tvseries.datamodel.SingleShow
 import com.example.tvseries.datamodel.TVSeries
 import retrofit2.Call
 import retrofit2.Callback
@@ -11,6 +12,7 @@ import javax.inject.Inject
 
 // https://www.episodate.com/api/most-popular
 // https://www.episodate.com/api/search?q=dance
+// https://www.episodate.com/api/show-details?q=29560
 
 class APIRepository @Inject constructor() : MainActivityContract.MainActivityModel {
 
@@ -42,6 +44,22 @@ class APIRepository @Inject constructor() : MainActivityContract.MainActivityMod
             }
 
             override fun onResponse(call: Call<TVSeries>, response: Response<TVSeries>) {
+                if (response.isSuccessful) {
+                    response.body()?.let { callback.onSuccess(it) }
+                } else {
+                    callback.onError()
+                }
+            }
+        })
+    }
+
+    fun getSingleShow(id: Int, callback: RepositoryCallback<SingleShow>) {
+        apiService.getSingleShow(id).enqueue(object : Callback<SingleShow> {
+            override fun onFailure(call: Call<SingleShow>, t: Throwable) {
+                callback.onError()
+            }
+
+            override fun onResponse(call: Call<SingleShow>, response: Response<SingleShow>) {
                 if (response.isSuccessful) {
                     response.body()?.let { callback.onSuccess(it) }
                 } else {

@@ -3,7 +3,7 @@ package com.example.tvseries.model
 import com.example.tvseries.contracts.DetailsFragmentContract
 import com.example.tvseries.contracts.FavoriteShowsActivityContract
 import com.example.tvseries.database.FavoriteShowsDatabase
-import com.example.tvseries.datamodel.SingleShow
+import com.example.tvseries.datamodel.TVShow
 import javax.inject.Inject
 
 class RoomRepository @Inject constructor() : DetailsFragmentContract.DetailsFragmentModel,
@@ -12,18 +12,17 @@ class RoomRepository @Inject constructor() : DetailsFragmentContract.DetailsFrag
     @Inject
     lateinit var roomDatabase: FavoriteShowsDatabase
 
-    override fun saveShow(show: SingleShow) {
+    override fun saveShow(show: TVShow) {
         roomDatabase.favoriteShowsDao().insert(show)
     }
 
-
-    override fun deleteShow(show: SingleShow) {
+    override fun deleteShow(show: TVShow) {
         roomDatabase.favoriteShowsDao().delete(show)
     }
 
     override fun getFavoriteShows() = roomDatabase.favoriteShowsDao().getAll()
 
-    override fun isShowInFavorites(show: SingleShow): Boolean {
+    override fun isShowInFavorites(show: TVShow): Boolean {
         val favorites = getFavoriteShows()
         return favorites.contains(show)
     }

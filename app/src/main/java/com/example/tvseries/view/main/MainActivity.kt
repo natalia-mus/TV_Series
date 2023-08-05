@@ -16,11 +16,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.tvseries.BaseApplication
 import com.example.tvseries.R
 import com.example.tvseries.contracts.MainActivityContract
-import com.example.tvseries.datamodel.SingleShow
 import com.example.tvseries.objects.Constants
 import com.example.tvseries.presenter.MainActivityPresenter
 import com.example.tvseries.view.OnItemClickAction
-import com.example.tvseries.view.adapters.SingleShowAdapter
+import com.example.tvseries.view.adapters.TVShowsAdapter
 import com.example.tvseries.view.details.DetailsActivity
 import com.example.tvseries.view.favoriteshows.FavoriteShowsActivity
 import javax.inject.Inject
@@ -80,7 +79,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
 
         if (status) {
             val data = presenter.returnData()
-            seriesListRecyclerView.adapter = SingleShowAdapter(this, data, this)
+            seriesListRecyclerView.adapter = TVShowsAdapter(this, data, this)
             hintSection.visibility = View.VISIBLE
             header.visibility = View.VISIBLE
         } else {
