@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
@@ -15,8 +16,10 @@ import com.example.tvseries.contracts.DetailsFragmentContract
 import com.example.tvseries.datamodel.TVShow
 import com.example.tvseries.objects.Constants
 import com.example.tvseries.presenter.DetailsFragmentPresenter
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DetailsFragment(
     private val showId: Int?,
@@ -38,6 +41,7 @@ class DetailsFragment(
     private lateinit var fragmentView: View
 
     private var isInFavorites = MutableLiveData<Boolean>().apply { this.value = false }
+    private var show: TVShow? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,16 +68,26 @@ class DetailsFragment(
         description = fragmentView.findViewById(R.id.details_description)
         saveButton = fragmentView.findViewById(R.id.details_saveButton)
 
-//        image.setOnClickListener() {
-//            onImageClickAction.onImageClicked(show?.image)
-//        }
+        image.setOnClickListener() {
+            onImageClickAction.onImageClicked(show?.image)
+        }
 
         saveButton.setOnClickListener() {
             handleOnLikeButtonClick()
         }
     }
 
-    override fun initData(show: TVShow) {
+    override fun updateView(show: TVShow?) {
+        if (show != null) {
+            initData(show)
+
+        } else {
+            // todo
+        }
+    }
+
+    private fun initData(show: TVShow) {
+        this.show = show
         Glide.with(this).load(show.image).into(image)
 
         name.text = show.name
@@ -94,17 +108,19 @@ class DetailsFragment(
     }
 
     private fun handleOnLikeButtonClick() {
-//        if (show != null) {
-//            if (isInFavorites.value == true) {
-//                presenter.deleteShow(show)
-//                isInFavorites.value = false
-//
-//            } else {
-//                presenter.saveShow(show)
-//                Toast.makeText(activity, resources.getString(R.string.saved_to_favorites), Toast.LENGTH_SHORT).show()
-//                isInFavorites.value = true
-//            }
-//        }
+        if (isInFavorites.value == true) {
+            show?.let {
+                presenter.deleteShow(it)
+                isInFavorites.value = false
+            }
+
+        } else {
+            show?.let {
+                presenter.saveShow(it)
+                Toast.makeText(activity, resources.getString(R.string.saved_to_favorites), Toast.LENGTH_SHORT).show()
+                isInFavorites.value = true
+            }
+        }
     }
 
     private fun setSaveButtonIconColor(isInFavorites: Boolean) {
@@ -118,15 +134,15 @@ class DetailsFragment(
     }
 
     private suspend fun isInFavorites() {
-//        if (show != null) {
-//            GlobalScope.launch(Dispatchers.IO) {
-//                val result = presenter.isShowInFavorites(show)
-//
-//                withContext(Dispatchers.Main) {
-//                    isInFavorites.value = result
-//                }
-//            }
-//        }
+        if (show != null) {
+            GlobalScope.launch(Dispatchers.IO) {
+                val result = presenter.isShowInFavorites(show!!)
+
+                withContext(Dispatchers.Main) {
+                    isInFavorites.value = result
+                }
+            }
+        }
     }
 
 }

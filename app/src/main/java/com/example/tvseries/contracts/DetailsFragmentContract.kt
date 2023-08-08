@@ -18,7 +18,7 @@ interface DetailsFragmentContract {
     }
 
     interface DetailsFragmentView {
-        fun initData(show: TVShow)
         fun initView()
+        fun updateView(show: TVShow?)
     }
 }

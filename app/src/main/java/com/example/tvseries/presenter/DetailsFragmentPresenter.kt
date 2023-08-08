@@ -34,14 +34,13 @@ class DetailsFragmentPresenter : DetailsFragmentContract.DetailsFragmentPresente
         view.initView()
         model.getSingleShow(id, object : RepositoryCallback<SingleShow> {
             override fun onError() {
-                // todo
+                view.updateView(null)
             }
 
             override fun onSuccess(data: SingleShow) {
-                // todo
+                view.updateView(data.tvShow)
             }
         })
-        //view.initData(show)
     }
 
     override suspend fun isShowInFavorites(show: TVShow): Boolean {
