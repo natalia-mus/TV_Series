@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
 
     override fun updateView() {
         val status = presenter.returnStatus()
-        progressBar.visibility = View.INVISIBLE
+        progressBar.visibility = View.GONE
 
         if (status) {
             val data = presenter.returnData()

@@ -89,7 +89,7 @@ class FavoriteShowsActivity : AppCompatActivity(),
         progressBar.visibility = View.GONE
 
         if (data.isEmpty()) {
-            favoriteShowsListSection.visibility = View.INVISIBLE
+            favoriteShowsListSection.visibility = View.GONE
             noFavoriteShowsInfo.visibility = View.VISIBLE
         } else {
             if (adapter == null) {

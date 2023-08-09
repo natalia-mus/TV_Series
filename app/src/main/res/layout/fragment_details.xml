@@ -6,10 +6,36 @@
     android:layout_height="match_parent"
     android:background="@drawable/curtain">
 
+    <ProgressBar
+        android:id="@+id/details_progressBar"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:indeterminateTint="@color/black"
+        android:translationZ="90dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/details_errorInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_data"
+        android:textColor="@color/hint"
+        android:textSize="20sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/details_section"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:isScrollContainer="false"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">

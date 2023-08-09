@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
@@ -28,6 +26,7 @@ class DetailsFragment(
 
     val presenter = DetailsFragmentPresenter()
 
+    private lateinit var detailsSection: NestedScrollView
     private lateinit var image: ImageView
     private lateinit var name: TextView
     private lateinit var network: TextView
@@ -36,6 +35,8 @@ class DetailsFragment(
     private lateinit var endDate: TextView
     private lateinit var status: TextView
     private lateinit var description: TextView
+    private lateinit var progressBar: ProgressBar
+    private lateinit var errorInfo: TextView
 
     private lateinit var saveButton: ImageButton
     private lateinit var fragmentView: View
@@ -58,6 +59,7 @@ class DetailsFragment(
     }
 
     override fun initView() {
+        detailsSection = fragmentView.findViewById(R.id.details_section)
         image = fragmentView.findViewById(R.id.details_image)
         name = fragmentView.findViewById(R.id.details_name)
         network = fragmentView.findViewById(R.id.details_network)
@@ -67,6 +69,8 @@ class DetailsFragment(
         status = fragmentView.findViewById(R.id.details_status)
         description = fragmentView.findViewById(R.id.details_description)
         saveButton = fragmentView.findViewById(R.id.details_saveButton)
+        progressBar = fragmentView.findViewById(R.id.details_progressBar)
+        errorInfo = fragmentView.findViewById(R.id.details_errorInfo)
 
         image.setOnClickListener() {
             onImageClickAction.onImageClicked(show?.image)
@@ -78,11 +82,13 @@ class DetailsFragment(
     }
 
     override fun updateView(show: TVShow?) {
+        progressBar.visibility = View.GONE
+        detailsSection.visibility = View.VISIBLE
         if (show != null) {
             initData(show)
 
         } else {
-            // todo
+            errorInfo.visibility = View.VISIBLE
         }
     }
 
