@@ -18,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.math.RoundingMode
 
 class DetailsFragment(
     private val showId: Int?,
@@ -30,6 +31,7 @@ class DetailsFragment(
     private lateinit var image: ImageView
     private lateinit var name: TextView
     private lateinit var network: TextView
+    private lateinit var rating: TextView
     private lateinit var country: TextView
     private lateinit var startDate: TextView
     private lateinit var endDate: TextView
@@ -63,6 +65,7 @@ class DetailsFragment(
         image = fragmentView.findViewById(R.id.details_image)
         name = fragmentView.findViewById(R.id.details_name)
         network = fragmentView.findViewById(R.id.details_network)
+        rating = fragmentView.findViewById(R.id.details_rating)
         country = fragmentView.findViewById(R.id.details_country)
         startDate = fragmentView.findViewById(R.id.details_startDate)
         endDate = fragmentView.findViewById(R.id.details_endDate)
@@ -98,6 +101,7 @@ class DetailsFragment(
 
         name.text = show.name
         network.text = show.network
+        rating.text = show.rating.toBigDecimal().setScale(1, RoundingMode.HALF_UP).toDouble().toString()
         country.text = show.country
         startDate.text = show.startDate
         status.text = show.status
