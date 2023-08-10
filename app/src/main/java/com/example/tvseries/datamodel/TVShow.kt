@@ -22,4 +22,5 @@ data class TVShow(
     val status: String,
     @SerializedName("image_path")
     val image: String,
+    val description: String
 ) : Parcelable

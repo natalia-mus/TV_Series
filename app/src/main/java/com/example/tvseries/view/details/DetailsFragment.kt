@@ -101,6 +101,7 @@ class DetailsFragment(
         country.text = show.country
         startDate.text = show.startDate
         status.text = show.status
+        description.text = show.description
 
         if (show.endDate.isNullOrEmpty()) {
             endDate.text = Constants.NULL
