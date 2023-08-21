@@ -19,8 +19,8 @@
 
     <ImageView
         android:id="@+id/showItem_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:paddingVertical="54dp"
         android:src="@drawable/ic_image_not_found"
         app:layout_constraintBottom_toTopOf="@id/showItem_lowerVideotape"

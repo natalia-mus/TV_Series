@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
@@ -97,7 +98,10 @@ class DetailsFragment(
 
     private fun initData(show: TVShow) {
         this.show = show
-        Glide.with(this).load(show.image).into(image)
+        Glide.with(this)
+            .load(show.image)
+            .placeholder(ResourcesCompat.getDrawable(resources, R.drawable.ic_image_not_found, null))
+            .into(image)
 
         name.text = show.name
         network.text = show.network

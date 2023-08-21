@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.tvseries.R
@@ -33,7 +34,10 @@ class FavoriteShowAdapter(
         val item = favoriteShows[position]
 
         holder.name.text = item.name
-        Glide.with(context).load(item.image).into(holder.image)
+        Glide.with(context)
+            .load(item.image)
+            .placeholder(ResourcesCompat.getDrawable(context.resources, R.drawable.ic_image_not_found, null))
+            .into(holder.image)
 
         holder.item.setOnClickListener {
             onItemClickAction.onItemClicked(item.id)

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.tvseries.R
@@ -29,6 +30,7 @@ class TVShowsAdapter(
     override fun onBindViewHolder(holder: SingleShowAdapterViewHolder, position: Int) {
         Glide.with(holder.itemView)
             .load(seriesList[position].image)
+            .placeholder(ResourcesCompat.getDrawable(context.resources, R.drawable.ic_image_not_found, null))
             .into(holder.showImage)
 
         holder.showItem.setOnClickListener() {
