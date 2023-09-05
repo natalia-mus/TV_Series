@@ -100,7 +100,7 @@ class DetailsFragment(
         this.show = show
         Glide.with(this)
             .load(show.image)
-            .placeholder(ResourcesCompat.getDrawable(resources, R.drawable.ic_image_not_found, null))
+            .placeholder(ResourcesCompat.getDrawable(resources, R.drawable.ic_movie, null))
             .into(image)
 
         name.text = show.name

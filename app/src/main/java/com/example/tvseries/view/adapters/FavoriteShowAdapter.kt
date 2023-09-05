@@ -36,7 +36,7 @@ class FavoriteShowAdapter(
         holder.name.text = item.name
         Glide.with(context)
             .load(item.image)
-            .placeholder(ResourcesCompat.getDrawable(context.resources, R.drawable.ic_image_not_found, null))
+            .placeholder(ResourcesCompat.getDrawable(context.resources, R.drawable.ic_movie, null))
             .into(holder.image)
 
         holder.item.setOnClickListener {

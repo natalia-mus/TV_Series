@@ -33,7 +33,7 @@ class ImageFragment(private val imageSource: String?) : Fragment() {
     private fun initData() {
         Glide.with(this)
             .load(imageSource)
-            .placeholder(ResourcesCompat.getDrawable(resources, R.drawable.ic_image_not_found, null))
+            .placeholder(ResourcesCompat.getDrawable(resources, R.drawable.ic_movie, null))
             .into(image)
     }
 }

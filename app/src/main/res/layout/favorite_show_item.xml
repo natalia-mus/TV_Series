@@ -14,7 +14,7 @@
         android:id="@+id/favoriteShow_image"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:src="@drawable/ic_image_not_found"
+        android:src="@drawable/ic_movie"
         app:layout_constraintBottom_toTopOf="@+id/favoriteShow_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
