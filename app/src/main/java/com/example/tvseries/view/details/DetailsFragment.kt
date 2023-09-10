@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.example.tvseries.R
 import com.example.tvseries.contracts.DetailsFragmentContract
 import com.example.tvseries.datamodel.TVShow
+import com.example.tvseries.datamodel.TVShowForDatabase
 import com.example.tvseries.objects.Constants
 import com.example.tvseries.presenter.DetailsFragmentPresenter
 import kotlinx.coroutines.Dispatchers
@@ -125,7 +126,7 @@ class DetailsFragment(
     private fun handleOnLikeButtonClick() {
         if (isInFavorites.value == true) {
             show?.let {
-                presenter.deleteShow(it)
+                presenter.deleteShow(TVShowForDatabase(it))
                 isInFavorites.value = false
             }
 

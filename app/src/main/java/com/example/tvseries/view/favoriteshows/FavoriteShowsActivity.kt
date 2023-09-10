@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tvseries.R
 import com.example.tvseries.contracts.FavoriteShowsActivityContract
-import com.example.tvseries.datamodel.TVShow
+import com.example.tvseries.datamodel.TVShowForDatabase
 import com.example.tvseries.objects.Constants
 import com.example.tvseries.presenter.FavoriteShowsActivityPresenter
 import com.example.tvseries.view.OnItemClickAction
@@ -66,7 +66,7 @@ class FavoriteShowsActivity : AppCompatActivity(),
         startActivity(intent)
     }
 
-    override fun onItemLongClicked(item: TVShow) {
+    override fun onItemLongClicked(item: TVShowForDatabase) {
         if (!lockLongClick) {
             progressBar.visibility = View.VISIBLE
             lockLongClick = true
@@ -84,7 +84,7 @@ class FavoriteShowsActivity : AppCompatActivity(),
         }
     }
 
-    private fun refreshView(data: List<TVShow>) {
+    private fun refreshView(data: List<TVShowForDatabase>) {
         lockLongClick = false
         progressBar.visibility = View.GONE
 

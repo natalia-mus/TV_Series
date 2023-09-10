@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = DatabaseObject.tableName)
 @Parcelize
-data class TVShow(
+data class TVShowForDatabase(
     @PrimaryKey
     val id: Int,
     val name: String,
@@ -24,5 +24,20 @@ data class TVShow(
     val image: String,
     val description: String,
     val rating: String,
-    val pictures: ArrayList<String>
-) : Parcelable
+    var pictures: Pictures?
+) : Parcelable {
+
+    constructor(tvShow: TVShow) : this(
+        tvShow.id,
+        tvShow.name,
+        tvShow.startDate,
+        tvShow.endDate,
+        tvShow.country,
+        tvShow.network,
+        tvShow.status,
+        tvShow.image,
+        tvShow.description,
+        tvShow.rating,
+        Pictures(tvShow.pictures)
+    )
+}

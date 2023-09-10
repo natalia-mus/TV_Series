@@ -5,6 +5,7 @@ import com.example.tvseries.BaseApplication
 import com.example.tvseries.contracts.DetailsFragmentContract
 import com.example.tvseries.datamodel.TVShow
 import com.example.tvseries.datamodel.SingleShow
+import com.example.tvseries.datamodel.TVShowForDatabase
 import com.example.tvseries.model.APIRepository
 import com.example.tvseries.model.RoomRepository
 import kotlinx.coroutines.GlobalScope
@@ -45,7 +46,7 @@ class DetailsFragmentPresenter : DetailsFragmentContract.DetailsFragmentPresente
 
     override suspend fun isShowInFavorites(show: TVShow): Boolean {
         val result = GlobalScope.async {
-            database.isShowInFavorites(show)
+            database.isShowInFavorites(TVShowForDatabase(show))
         }
         return result.await()
     }
@@ -56,7 +57,7 @@ class DetailsFragmentPresenter : DetailsFragmentContract.DetailsFragmentPresente
         }
     }
 
-    override fun deleteShow(show: TVShow) {
+    override fun deleteShow(show: TVShowForDatabase) {
         GlobalScope.launch {
             database.deleteShow(show)
         }

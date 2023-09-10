@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:isScrollContainer="false"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -257,7 +257,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="40dp"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sed eros sed libero ultrices rutrum. Suspendisse sit amet blandit magna." />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/details_pictures"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

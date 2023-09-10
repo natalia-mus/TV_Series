@@ -11,13 +11,13 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.tvseries.R
-import com.example.tvseries.datamodel.TVShow
+import com.example.tvseries.datamodel.TVShowForDatabase
 import com.example.tvseries.view.OnItemClickAction
 import com.example.tvseries.view.OnItemLongClickAction
 
 class FavoriteShowAdapter(
     private val context: Context,
-    private var favoriteShows: List<TVShow>,
+    private var favoriteShows: List<TVShowForDatabase>,
     private val onItemClickAction: OnItemClickAction,
     private val onItemLongClickAction: OnItemLongClickAction
 ) :
@@ -51,7 +51,7 @@ class FavoriteShowAdapter(
 
     override fun getItemCount() = favoriteShows.size
 
-    fun dataSetChanged(newDataSet: List<TVShow>) {
+    fun dataSetChanged(newDataSet: List<TVShowForDatabase>) {
         favoriteShows = newDataSet
         notifyDataSetChanged()
     }
