@@ -31,6 +31,7 @@ class TypeConverters {
 
             } else {
                 result.add(pictureUrl)
+                pictureUrl = ""
             }
         }
 

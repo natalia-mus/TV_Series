@@ -24,7 +24,7 @@ data class TVShowForDatabase(
     val image: String,
     val description: String,
     val rating: String,
-    var pictures: Pictures?
+    val pictures: Pictures?
 ) : Parcelable {
 
     constructor(tvShow: TVShow) : this(
