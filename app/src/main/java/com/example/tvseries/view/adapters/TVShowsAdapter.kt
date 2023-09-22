@@ -17,8 +17,7 @@ class TVShowsAdapter(
     private val context: Context,
     tvSeries: TVSeries,
     private val onItemClickAction: OnItemClickAction
-) :
-    RecyclerView.Adapter<SingleShowAdapterViewHolder>() {
+) : RecyclerView.Adapter<SingleShowAdapterViewHolder>() {
 
     private val seriesList = tvSeries.tvShows
 

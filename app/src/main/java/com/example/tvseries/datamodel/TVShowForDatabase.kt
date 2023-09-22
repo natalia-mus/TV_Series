@@ -14,7 +14,7 @@ data class TVShowForDatabase(
     val id: Int,
     val name: String,
     @SerializedName("start_date")
-    val startDate: String,
+    val startDate: String?,
     @SerializedName("end_date")
     val endDate: String?,
     val country: String,

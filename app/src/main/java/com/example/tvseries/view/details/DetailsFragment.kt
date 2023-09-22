@@ -9,9 +9,12 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.tvseries.R
 import com.example.tvseries.contracts.DetailsFragmentContract
+import com.example.tvseries.datamodel.Pictures
 import com.example.tvseries.datamodel.TVShow
 import com.example.tvseries.datamodel.TVShowForDatabase
 import com.example.tvseries.objects.Constants
@@ -41,6 +44,7 @@ class DetailsFragment(
     private lateinit var description: TextView
     private lateinit var progressBar: ProgressBar
     private lateinit var errorInfo: TextView
+    private lateinit var pictures: RecyclerView
 
     private lateinit var saveButton: ImageButton
     private lateinit var fragmentView: View
@@ -76,6 +80,7 @@ class DetailsFragment(
         saveButton = fragmentView.findViewById(R.id.details_saveButton)
         progressBar = fragmentView.findViewById(R.id.details_progressBar)
         errorInfo = fragmentView.findViewById(R.id.details_errorInfo)
+        pictures = fragmentView.findViewById(R.id.details_pictures)
 
         image.setOnClickListener() {
             onImageClickAction.onImageClicked(show?.image)
@@ -111,12 +116,10 @@ class DetailsFragment(
         startDate.text = show.startDate
         status.text = show.status
         description.text = show.description
+        setValue(startDate, show.startDate)
+        setValue(endDate, show.endDate)
 
-        if (show.endDate.isNullOrEmpty()) {
-            endDate.text = Constants.NULL
-        } else {
-            endDate.text = show.endDate
-        }
+        loadImages(show.pictures)
 
         GlobalScope.launch {
             isInFavorites()
@@ -139,6 +142,13 @@ class DetailsFragment(
         }
     }
 
+    private fun loadImages(pictureUrls: ArrayList<String>) {
+        if (context != null) {
+            pictures.adapter = PicturesAdapter(context!!, Pictures(pictureUrls))
+            pictures.layoutManager = GridLayoutManager(context, 3)
+        }
+    }
+
     private fun setSaveButtonIconColor(isInFavorites: Boolean) {
         var color = resources.getColor(R.color.white, null)
 
@@ -147,6 +157,14 @@ class DetailsFragment(
         }
 
         saveButton.drawable.setTint(color)
+    }
+
+    private fun setValue(field: TextView, value: String?) {
+        if (value.isNullOrEmpty()) {
+            field.text = Constants.NULL
+        } else {
+            field.text = value
+        }
     }
 
     private suspend fun isInFavorites() {
