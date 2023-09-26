@@ -6,7 +6,7 @@ import androidx.room.TypeConverters
 import com.example.tvseries.datamodel.TVShowForDatabase
 
 @TypeConverters(com.example.tvseries.datamodel.TypeConverters::class)
-@Database(entities = [TVShowForDatabase::class], version = 13, exportSchema = false)
+@Database(entities = [TVShowForDatabase::class], version = 14, exportSchema = false)
 abstract class FavoriteShowsDatabase : RoomDatabase() {
 
     abstract fun favoriteShowsDao(): FavoriteShowsDao

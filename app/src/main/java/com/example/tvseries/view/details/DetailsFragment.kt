@@ -68,7 +68,7 @@ class DetailsFragment(
 
     override fun initView() {
         detailsSection = fragmentView.findViewById(R.id.details_section)
-        poster = fragmentView.findViewById(R.id.details_image)
+        poster = fragmentView.findViewById(R.id.details_poster)
         name = fragmentView.findViewById(R.id.details_name)
         network = fragmentView.findViewById(R.id.details_network)
         rating = fragmentView.findViewById(R.id.details_rating)
@@ -83,7 +83,7 @@ class DetailsFragment(
         pictures = fragmentView.findViewById(R.id.details_pictures)
 
         poster.setOnClickListener() {
-            onImageClickAction.onImageClicked(show?.poster, true)
+            onImageClickAction.onImageClicked(show?.poster, true, null)
         }
 
         saveButton.setOnClickListener() {
@@ -183,5 +183,5 @@ class DetailsFragment(
 
 
 interface OnImageClickAction {
-    fun onImageClicked(image: String?, isPoster: Boolean)
+    fun onImageClicked(image: String?, isPoster: Boolean, images: ArrayList<String>?)
 }

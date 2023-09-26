@@ -35,9 +35,9 @@ class FavoriteShowAdapter(
 
         holder.name.text = item.name
         Glide.with(context)
-            .load(item.image)
+            .load(item.poster)
             .placeholder(ResourcesCompat.getDrawable(context.resources, R.drawable.ic_movie, null))
-            .into(holder.image)
+            .into(holder.poster)
 
         holder.item.setOnClickListener {
             onItemClickAction.onItemClicked(item.id)
@@ -60,6 +60,6 @@ class FavoriteShowAdapter(
 
 class FavoriteShowViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val item: ConstraintLayout = view.findViewById(R.id.favoriteShow_item)
-    val image: ImageView = view.findViewById(R.id.favoriteShow_image)
+    val poster: ImageView = view.findViewById(R.id.favoriteShow_poster)
     val name: TextView = view.findViewById(R.id.favoriteShow_name)
 }

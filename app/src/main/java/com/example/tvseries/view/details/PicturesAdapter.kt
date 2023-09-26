@@ -25,7 +25,7 @@ class PicturesAdapter(private val context: Context, private val pictures: Pictur
             .into(holder.picture)
 
         holder.picture.setOnClickListener {
-            onImageClickAction.onImageClicked(pictures.pictures[position], false)
+            onImageClickAction.onImageClicked(pictures.pictures[position], false, pictures.pictures)
         }
     }
 
