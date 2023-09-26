@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.tvseries.R
 import com.example.tvseries.datamodel.Pictures
 
-class PicturesAdapter(private val context: Context, private val pictures: Pictures) : RecyclerView.Adapter<PicturesViewHolder>() {
+class PicturesAdapter(private val context: Context, private val pictures: Pictures, private val onImageClickAction: OnImageClickAction) : RecyclerView.Adapter<PicturesViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PicturesViewHolder {
         val layoutInflater = LayoutInflater.from(context).inflate(R.layout.picture_item, parent, false)
@@ -23,6 +23,10 @@ class PicturesAdapter(private val context: Context, private val pictures: Pictur
             .centerCrop()
             .override(100, 100)
             .into(holder.picture)
+
+        holder.picture.setOnClickListener {
+            onImageClickAction.onImageClicked(pictures.pictures[position], false)
+        }
     }
 
     override fun getItemCount() = pictures.pictures.size

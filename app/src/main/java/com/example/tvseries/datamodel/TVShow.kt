@@ -21,7 +21,7 @@ data class TVShow(
     val network: String,
     val status: String,
     @SerializedName("image_path")
-    val image: String,
+    val poster: String,
     val description: String,
     val rating: String,
     val pictures: ArrayList<String>

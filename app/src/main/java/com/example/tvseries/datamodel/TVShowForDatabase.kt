@@ -35,7 +35,7 @@ data class TVShowForDatabase(
         tvShow.country,
         tvShow.network,
         tvShow.status,
-        tvShow.image,
+        tvShow.poster,
         tvShow.description,
         tvShow.rating,
         Pictures(tvShow.pictures)

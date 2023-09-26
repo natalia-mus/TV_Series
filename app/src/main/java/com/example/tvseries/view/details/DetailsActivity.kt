@@ -20,7 +20,7 @@ class DetailsActivity : AppCompatActivity(), OnImageClickAction {
 
     }
 
-    override fun onImageClicked(image: String?) {
+    override fun onImageClicked(image: String?, isPoster: Boolean) {
         supportFragmentManager.beginTransaction()
             .add(R.id.details_fragment, ImageFragment(image))
             .addToBackStack(null)

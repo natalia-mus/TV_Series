@@ -33,7 +33,7 @@ class DetailsFragment(
     val presenter = DetailsFragmentPresenter()
 
     private lateinit var detailsSection: NestedScrollView
-    private lateinit var image: ImageView
+    private lateinit var poster: ImageView
     private lateinit var name: TextView
     private lateinit var network: TextView
     private lateinit var rating: TextView
@@ -68,7 +68,7 @@ class DetailsFragment(
 
     override fun initView() {
         detailsSection = fragmentView.findViewById(R.id.details_section)
-        image = fragmentView.findViewById(R.id.details_image)
+        poster = fragmentView.findViewById(R.id.details_image)
         name = fragmentView.findViewById(R.id.details_name)
         network = fragmentView.findViewById(R.id.details_network)
         rating = fragmentView.findViewById(R.id.details_rating)
@@ -82,8 +82,8 @@ class DetailsFragment(
         errorInfo = fragmentView.findViewById(R.id.details_errorInfo)
         pictures = fragmentView.findViewById(R.id.details_pictures)
 
-        image.setOnClickListener() {
-            onImageClickAction.onImageClicked(show?.image)
+        poster.setOnClickListener() {
+            onImageClickAction.onImageClicked(show?.poster, true)
         }
 
         saveButton.setOnClickListener() {
@@ -105,9 +105,9 @@ class DetailsFragment(
     private fun initData(show: TVShow) {
         this.show = show
         Glide.with(this)
-            .load(show.image)
+            .load(show.poster)
             .placeholder(ResourcesCompat.getDrawable(resources, R.drawable.ic_movie, null))
-            .into(image)
+            .into(poster)
 
         name.text = show.name
         network.text = show.network
@@ -144,7 +144,7 @@ class DetailsFragment(
 
     private fun loadImages(pictureUrls: ArrayList<String>) {
         if (context != null) {
-            pictures.adapter = PicturesAdapter(context!!, Pictures(pictureUrls))
+            pictures.adapter = PicturesAdapter(context!!, Pictures(pictureUrls), onImageClickAction)
             pictures.layoutManager = GridLayoutManager(context, 3)
         }
     }
@@ -183,5 +183,5 @@ class DetailsFragment(
 
 
 interface OnImageClickAction {
-    fun onImageClicked(image: String?)
+    fun onImageClicked(image: String?, isPoster: Boolean)
 }
