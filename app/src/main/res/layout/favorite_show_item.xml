@@ -11,10 +11,10 @@
     android:layout_marginBottom="8dp">
 
     <ImageView
-        android:id="@+id/favoriteShow_image"
+        android:id="@+id/favoriteShow_poster"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:src="@drawable/ic_image_not_found"
+        android:src="@drawable/ic_movie"
         app:layout_constraintBottom_toTopOf="@+id/favoriteShow_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +31,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/favoriteShow_image"
+        app:layout_constraintTop_toBottomOf="@+id/favoriteShow_poster"
         tools:text="Name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

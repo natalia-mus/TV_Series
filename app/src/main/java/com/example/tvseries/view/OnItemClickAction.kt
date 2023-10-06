@@ -1,11 +1,11 @@
 package com.example.tvseries.view
 
-import com.example.tvseries.datamodel.SingleShow
+import com.example.tvseries.datamodel.TVShowForDatabase
 
 interface OnItemClickAction {
-    fun onItemClicked(item: SingleShow)
+    fun onItemClicked(showId: Int)
 }
 
 interface OnItemLongClickAction {
-    fun onItemLongClicked(item: SingleShow)
+    fun onItemLongClicked(item: TVShowForDatabase)
 }

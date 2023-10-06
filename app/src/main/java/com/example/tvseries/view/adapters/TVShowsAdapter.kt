@@ -6,34 +6,34 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.tvseries.R
 import com.example.tvseries.datamodel.TVSeries
 import com.example.tvseries.view.OnItemClickAction
 
-class SingleShowAdapter(
+class TVShowsAdapter(
     private val context: Context,
     tvSeries: TVSeries,
     private val onItemClickAction: OnItemClickAction
-) :
-    RecyclerView.Adapter<SingleShowAdapterViewHolder>() {
+) : RecyclerView.Adapter<SingleShowAdapterViewHolder>() {
 
     private val seriesList = tvSeries.tvShows
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SingleShowAdapterViewHolder {
-        val layoutInflater =
-            LayoutInflater.from(context).inflate(R.layout.single_show_item, parent, false)
+        val layoutInflater = LayoutInflater.from(context).inflate(R.layout.single_show_item, parent, false)
         return SingleShowAdapterViewHolder(layoutInflater)
     }
 
     override fun onBindViewHolder(holder: SingleShowAdapterViewHolder, position: Int) {
         Glide.with(holder.itemView)
             .load(seriesList[position].image)
+            .placeholder(ResourcesCompat.getDrawable(context.resources, R.drawable.ic_movie, null))
             .into(holder.showImage)
 
         holder.showItem.setOnClickListener() {
-            onItemClickAction.onItemClicked(seriesList[position])
+            onItemClickAction.onItemClicked(seriesList[position].id)
         }
     }
 

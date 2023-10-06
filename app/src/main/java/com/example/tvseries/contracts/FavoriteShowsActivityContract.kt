@@ -1,20 +1,19 @@
 package com.example.tvseries.contracts
 
-import com.example.tvseries.datamodel.SingleShow
+import com.example.tvseries.datamodel.TVShowForDatabase
 
 interface FavoriteShowsActivityContract {
 
     interface FavoriteShowsActivityModel {
-        fun deleteShow(show: SingleShow)
-        fun getFavoriteShows(): List<SingleShow>
-        fun isShowInFavorites(show: SingleShow): Boolean
+        fun getFavoriteShows(): List<TVShowForDatabase>
+        fun isShowInFavorites(show: TVShowForDatabase): Boolean
     }
 
     interface FavoriteShowsActivityPresenter {
         fun setViewToPresenter(view: FavoriteShowsActivityView)
         fun initView()
-        suspend fun returnData(): List<SingleShow>
-        fun deleteShow(show: SingleShow)
+        suspend fun returnData(): List<TVShowForDatabase>
+        fun deleteShow(show: TVShowForDatabase)
     }
 
     interface FavoriteShowsActivityView {

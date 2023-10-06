@@ -4,42 +4,53 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.tvseries.R
 import com.example.tvseries.contracts.DetailsFragmentContract
-import com.example.tvseries.datamodel.SingleShow
+import com.example.tvseries.datamodel.Pictures
+import com.example.tvseries.datamodel.TVShow
+import com.example.tvseries.datamodel.TVShowForDatabase
 import com.example.tvseries.objects.Constants
 import com.example.tvseries.presenter.DetailsFragmentPresenter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.math.RoundingMode
 
 class DetailsFragment(
-    private val show: SingleShow?,
+    private val showId: Int?,
     private val onImageClickAction: OnImageClickAction
 ) : Fragment(), DetailsFragmentContract.DetailsFragmentView {
 
     val presenter = DetailsFragmentPresenter()
 
-    private lateinit var image: ImageView
+    private lateinit var detailsSection: NestedScrollView
+    private lateinit var poster: ImageView
     private lateinit var name: TextView
     private lateinit var network: TextView
+    private lateinit var rating: TextView
     private lateinit var country: TextView
     private lateinit var startDate: TextView
     private lateinit var endDate: TextView
     private lateinit var status: TextView
+    private lateinit var description: TextView
+    private lateinit var progressBar: ProgressBar
+    private lateinit var errorInfo: TextView
+    private lateinit var pictures: RecyclerView
 
     private lateinit var saveButton: ImageButton
     private lateinit var fragmentView: View
 
     private var isInFavorites = MutableLiveData<Boolean>().apply { this.value = false }
+    private var show: TVShow? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,7 +59,7 @@ class DetailsFragment(
     ): View {
         fragmentView = inflater.inflate(R.layout.fragment_details, container, false)
         presenter.setViewToPresenter(this)
-        presenter.initView()
+        showId?.let { presenter.initView(it) }
 
         isInFavorites.observe(this) { setSaveButtonIconColor(it) }
 
@@ -56,17 +67,23 @@ class DetailsFragment(
     }
 
     override fun initView() {
-        image = fragmentView.findViewById(R.id.details_image)
+        detailsSection = fragmentView.findViewById(R.id.details_section)
+        poster = fragmentView.findViewById(R.id.details_poster)
         name = fragmentView.findViewById(R.id.details_name)
         network = fragmentView.findViewById(R.id.details_network)
+        rating = fragmentView.findViewById(R.id.details_rating)
         country = fragmentView.findViewById(R.id.details_country)
         startDate = fragmentView.findViewById(R.id.details_startDate)
         endDate = fragmentView.findViewById(R.id.details_endDate)
         status = fragmentView.findViewById(R.id.details_status)
+        description = fragmentView.findViewById(R.id.details_description)
         saveButton = fragmentView.findViewById(R.id.details_saveButton)
+        progressBar = fragmentView.findViewById(R.id.details_progressBar)
+        errorInfo = fragmentView.findViewById(R.id.details_errorInfo)
+        pictures = fragmentView.findViewById(R.id.details_pictures)
 
-        image.setOnClickListener() {
-            onImageClickAction.onImageClicked(show?.image)
+        poster.setOnClickListener() {
+            onImageClickAction.onImageClicked(show?.poster, true, null)
         }
 
         saveButton.setOnClickListener() {
@@ -74,39 +91,61 @@ class DetailsFragment(
         }
     }
 
-    override fun initData() {
+    override fun updateView(show: TVShow?) {
+        progressBar.visibility = View.GONE
+        detailsSection.visibility = View.VISIBLE
         if (show != null) {
-            Glide.with(this).load(show.image).into(image)
+            initData(show)
 
-            name.text = show.name
-            network.text = show.network
-            country.text = show.country
-            startDate.text = show.startDate
-            status.text = show.status
+        } else {
+            errorInfo.visibility = View.VISIBLE
+        }
+    }
 
-            if (show.endDate.isNullOrEmpty()) {
-                endDate.text = Constants.NULL
-            } else {
-                endDate.text = show.endDate
-            }
+    private fun initData(show: TVShow) {
+        this.show = show
+        Glide.with(this)
+            .load(show.poster)
+            .placeholder(ResourcesCompat.getDrawable(resources, R.drawable.ic_movie, null))
+            .into(poster)
 
-            GlobalScope.launch {
-                isInFavorites()
-            }
+        name.text = show.name
+        network.text = show.network
+        rating.text = show.rating.toBigDecimal().setScale(1, RoundingMode.HALF_UP).toDouble().toString()
+        country.text = show.country
+        startDate.text = show.startDate
+        status.text = show.status
+        description.text = show.description
+        setValue(startDate, show.startDate)
+        setValue(endDate, show.endDate)
+
+        loadImages(show.pictures)
+
+        GlobalScope.launch {
+            isInFavorites()
         }
     }
 
     private fun handleOnLikeButtonClick() {
-        if (show != null) {
-            if (isInFavorites.value == true) {
-                presenter.deleteShow(show)
+        if (isInFavorites.value == true) {
+            show?.let {
+                presenter.deleteShow(TVShowForDatabase(it))
                 isInFavorites.value = false
+            }
 
-            } else {
-                presenter.saveShow(show)
+        } else {
+            show?.let {
+                presenter.saveShow(it)
                 Toast.makeText(activity, resources.getString(R.string.saved_to_favorites), Toast.LENGTH_SHORT).show()
                 isInFavorites.value = true
             }
+        }
+    }
+
+    private fun loadImages(pictureUrls: ArrayList<String>) {
+        if (context != null) {
+            pictures.adapter = PicturesAdapter(context!!, Pictures(pictureUrls), onImageClickAction)
+            pictures.layoutManager = GridLayoutManager(context, 3)
         }
     }
 
@@ -120,10 +159,18 @@ class DetailsFragment(
         saveButton.drawable.setTint(color)
     }
 
+    private fun setValue(field: TextView, value: String?) {
+        if (value.isNullOrEmpty()) {
+            field.text = Constants.NULL
+        } else {
+            field.text = value
+        }
+    }
+
     private suspend fun isInFavorites() {
         if (show != null) {
             GlobalScope.launch(Dispatchers.IO) {
-                val result = presenter.isShowInFavorites(show)
+                val result = presenter.isShowInFavorites(show!!)
 
                 withContext(Dispatchers.Main) {
                     isInFavorites.value = result
@@ -136,5 +183,5 @@ class DetailsFragment(
 
 
 interface OnImageClickAction {
-    fun onImageClicked(image: String?)
+    fun onImageClicked(image: String?, isPoster: Boolean, images: ArrayList<String>?)
 }

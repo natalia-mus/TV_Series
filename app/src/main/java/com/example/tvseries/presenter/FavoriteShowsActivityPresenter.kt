@@ -2,7 +2,7 @@ package com.example.tvseries.presenter
 
 import com.example.tvseries.BaseApplication
 import com.example.tvseries.contracts.FavoriteShowsActivityContract
-import com.example.tvseries.datamodel.SingleShow
+import com.example.tvseries.datamodel.TVShowForDatabase
 import com.example.tvseries.model.RoomRepository
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -33,14 +33,14 @@ class FavoriteShowsActivityPresenter :
         }
     }
 
-    override suspend fun returnData(): List<SingleShow> {
+    override suspend fun returnData(): List<TVShowForDatabase> {
         val data = GlobalScope.async {
             model.getFavoriteShows()
         }
         return data.await()
     }
 
-    override fun deleteShow(show: SingleShow) {
+    override fun deleteShow(show: TVShowForDatabase) {
         GlobalScope.launch {
             model.deleteShow(show)
             view.updateView()

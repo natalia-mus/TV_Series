@@ -24,7 +24,7 @@
         android:text="@string/no_favorite_shows"
         android:textColor="@color/hint"
         android:textSize="20sp"
-        android:visibility="invisible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

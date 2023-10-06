@@ -7,16 +7,17 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.tvseries.R
-import com.example.tvseries.datamodel.SingleShow
+import com.example.tvseries.datamodel.TVShowForDatabase
 import com.example.tvseries.view.OnItemClickAction
 import com.example.tvseries.view.OnItemLongClickAction
 
 class FavoriteShowAdapter(
     private val context: Context,
-    private var favoriteShows: List<SingleShow>,
+    private var favoriteShows: List<TVShowForDatabase>,
     private val onItemClickAction: OnItemClickAction,
     private val onItemLongClickAction: OnItemLongClickAction
 ) :
@@ -33,10 +34,13 @@ class FavoriteShowAdapter(
         val item = favoriteShows[position]
 
         holder.name.text = item.name
-        Glide.with(context).load(item.image).into(holder.image)
+        Glide.with(context)
+            .load(item.poster)
+            .placeholder(ResourcesCompat.getDrawable(context.resources, R.drawable.ic_movie, null))
+            .into(holder.poster)
 
         holder.item.setOnClickListener {
-            onItemClickAction.onItemClicked(item)
+            onItemClickAction.onItemClicked(item.id)
         }
 
         holder.item.setOnLongClickListener {
@@ -47,7 +51,7 @@ class FavoriteShowAdapter(
 
     override fun getItemCount() = favoriteShows.size
 
-    fun dataSetChanged(newDataSet: List<SingleShow>) {
+    fun dataSetChanged(newDataSet: List<TVShowForDatabase>) {
         favoriteShows = newDataSet
         notifyDataSetChanged()
     }
@@ -56,6 +60,6 @@ class FavoriteShowAdapter(
 
 class FavoriteShowViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val item: ConstraintLayout = view.findViewById(R.id.favoriteShow_item)
-    val image: ImageView = view.findViewById(R.id.favoriteShow_image)
+    val poster: ImageView = view.findViewById(R.id.favoriteShow_poster)
     val name: TextView = view.findViewById(R.id.favoriteShow_name)
 }

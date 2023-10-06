@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tvseries.R
 import com.example.tvseries.contracts.FavoriteShowsActivityContract
-import com.example.tvseries.datamodel.SingleShow
+import com.example.tvseries.datamodel.TVShowForDatabase
 import com.example.tvseries.objects.Constants
 import com.example.tvseries.presenter.FavoriteShowsActivityPresenter
 import com.example.tvseries.view.OnItemClickAction
@@ -60,13 +60,13 @@ class FavoriteShowsActivity : AppCompatActivity(),
         initData()
     }
 
-    override fun onItemClicked(item: SingleShow) {
+    override fun onItemClicked(itemId: Int) {
         val intent = Intent(this, DetailsActivity::class.java)
-        intent.putExtra(Constants.ITEM, item)
+        intent.putExtra(Constants.ITEM_ID, itemId)
         startActivity(intent)
     }
 
-    override fun onItemLongClicked(item: SingleShow) {
+    override fun onItemLongClicked(item: TVShowForDatabase) {
         if (!lockLongClick) {
             progressBar.visibility = View.VISIBLE
             lockLongClick = true
@@ -84,12 +84,12 @@ class FavoriteShowsActivity : AppCompatActivity(),
         }
     }
 
-    private fun refreshView(data: List<SingleShow>) {
+    private fun refreshView(data: List<TVShowForDatabase>) {
         lockLongClick = false
         progressBar.visibility = View.GONE
 
         if (data.isEmpty()) {
-            favoriteShowsListSection.visibility = View.INVISIBLE
+            favoriteShowsListSection.visibility = View.GONE
             noFavoriteShowsInfo.visibility = View.VISIBLE
         } else {
             if (adapter == null) {

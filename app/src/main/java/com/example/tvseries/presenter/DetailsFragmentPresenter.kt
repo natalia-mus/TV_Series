@@ -1,8 +1,12 @@
 package com.example.tvseries.presenter
 
+import com.example.tvseries.API.RepositoryCallback
 import com.example.tvseries.BaseApplication
 import com.example.tvseries.contracts.DetailsFragmentContract
+import com.example.tvseries.datamodel.TVShow
 import com.example.tvseries.datamodel.SingleShow
+import com.example.tvseries.datamodel.TVShowForDatabase
+import com.example.tvseries.model.APIRepository
 import com.example.tvseries.model.RoomRepository
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -16,7 +20,10 @@ class DetailsFragmentPresenter : DetailsFragmentContract.DetailsFragmentPresente
     }
 
     @Inject
-    lateinit var model: RoomRepository
+    lateinit var database: RoomRepository
+
+    @Inject
+    lateinit var model: APIRepository
 
     private lateinit var view: DetailsFragmentContract.DetailsFragmentView
 
@@ -24,27 +31,35 @@ class DetailsFragmentPresenter : DetailsFragmentContract.DetailsFragmentPresente
         this.view = view
     }
 
-    override fun initView() {
+    override fun initView(id: Int) {
         view.initView()
-        view.initData()
+        model.getSingleShow(id, object : RepositoryCallback<SingleShow> {
+            override fun onError() {
+                view.updateView(null)
+            }
+
+            override fun onSuccess(data: SingleShow) {
+                view.updateView(data.tvShow)
+            }
+        })
     }
 
-    override suspend fun isShowInFavorites(show: SingleShow): Boolean {
+    override suspend fun isShowInFavorites(show: TVShow): Boolean {
         val result = GlobalScope.async {
-            model.isShowInFavorites(show)
+            database.isShowInFavorites(TVShowForDatabase(show))
         }
         return result.await()
     }
 
-    override fun saveShow(show: SingleShow) {
+    override fun saveShow(show: TVShow) {
         GlobalScope.launch {
-            model.saveShow(show)
+            database.saveShow(show)
         }
     }
 
-    override fun deleteShow(show: SingleShow) {
+    override fun deleteShow(show: TVShowForDatabase) {
         GlobalScope.launch {
-            model.deleteShow(show)
+            database.deleteShow(show)
         }
     }
 
