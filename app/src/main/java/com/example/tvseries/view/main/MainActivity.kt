@@ -3,11 +3,13 @@ package com.example.tvseries.view.main
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import android.widget.TextView.OnEditorActionListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -123,6 +125,13 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
         searchButton.setOnClickListener {
             searchByPhrase()
         }
+
+        searchField.setOnEditorActionListener(object : OnEditorActionListener {
+            override fun onEditorAction(p0: TextView?, p1: Int, p2: KeyEvent?): Boolean {
+                searchByPhrase()
+                return true
+            }
+        })
     }
 
 }
