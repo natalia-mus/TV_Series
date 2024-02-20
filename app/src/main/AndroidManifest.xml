@@ -11,7 +11,7 @@
         android:label="@string/label_tv_series"
         android:roundIcon="@mipmap/ic_tv_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.NoActionBar">
+        android:theme="@style/Theme.TVSeries">
         <activity
             android:name=".view.main.MainActivity"
             android:screenOrientation="portrait">
