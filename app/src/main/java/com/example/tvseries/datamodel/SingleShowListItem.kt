@@ -7,5 +7,6 @@ data class SingleShowListItem(
     @PrimaryKey
     val id: Int,
     @SerializedName("image_thumbnail_path")
-    val image: String
+    val image: String,
+    val name: String
 )

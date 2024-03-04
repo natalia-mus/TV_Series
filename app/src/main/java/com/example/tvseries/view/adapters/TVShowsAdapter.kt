@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -27,13 +28,17 @@ class TVShowsAdapter(
     }
 
     override fun onBindViewHolder(holder: SingleShowAdapterViewHolder, position: Int) {
+        val item = seriesList[position]
+
+        holder.showTitle.text = item.name
+
         Glide.with(holder.itemView)
-            .load(seriesList[position].image)
+            .load(item.image)
             .placeholder(ResourcesCompat.getDrawable(context.resources, R.drawable.ic_movie, null))
             .into(holder.showImage)
 
-        holder.showItem.setOnClickListener() {
-            onItemClickAction.onItemClicked(seriesList[position].id)
+        holder.showItem.setOnClickListener {
+            onItemClickAction.onItemClicked(item.id)
         }
     }
 
@@ -44,4 +49,5 @@ class TVShowsAdapter(
 class SingleShowAdapterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val showItem: ConstraintLayout = itemView.findViewById(R.id.showItem)
     val showImage: ImageView = itemView.findViewById(R.id.showItem_image)
+    val showTitle: TextView = itemView.findViewById(R.id.showItem_title)
 }

@@ -81,12 +81,25 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
 
         if (status) {
             val data = presenter.returnData()
-            seriesListRecyclerView.adapter = TVShowsAdapter(this, data, this)
-            hintSection.visibility = View.VISIBLE
-            header.visibility = View.VISIBLE
+
+            if (data.tvShows.isNotEmpty()) {
+                seriesListRecyclerView.adapter = TVShowsAdapter(this, data, this)
+                hintSection.visibility = View.VISIBLE
+                header.visibility = View.VISIBLE
+                seriesListRecyclerView.visibility = View.VISIBLE
+
+            } else {
+                errorInfo.text = resources.getString(R.string.no_results)
+                errorInfo.visibility = View.VISIBLE
+                header.visibility = View.GONE
+                hintSection.visibility = View.GONE
+                seriesListRecyclerView.visibility = View.GONE
+            }
         } else {
+            errorInfo.text = resources.getString(R.string.no_data)
             errorInfo.visibility = View.VISIBLE
             header.visibility = View.GONE
+            hintSection.visibility = View.GONE
             Toast.makeText(this, resources.getString(R.string.data_can_not_be_loaded), Toast.LENGTH_SHORT).show()
         }
     }
