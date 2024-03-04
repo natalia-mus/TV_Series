@@ -25,7 +25,12 @@ class RoomRepository @Inject constructor() : DetailsFragmentContract.DetailsFrag
 
     override fun isShowInFavorites(show: TVShowForDatabase): Boolean {
         val favorites = getFavoriteShows()
-        return favorites.contains(show)
+
+        for (favorite in favorites) {
+            if (favorite.id == show.id)
+                return true
+        }
+        return false
     }
 
 }
